@@ -30,13 +30,13 @@
     <url>https://github.com/spacetelescope/gwcs-java/tree/main</url>
   </scm>
 
-  <packaging>pom</packaging>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>11</maven.compiler.release>
     <revision>dev</revision>
     <lombok.version>1.18.36</lombok.version>
+    <asdf.version>0.1-alpha-8</asdf.version>
+    <ejml.version>0.44.0</ejml.version>
     <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
     <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
     <jblosc.version>1.0.1</jblosc.version>
@@ -60,6 +60,18 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>org.asdf-format</groupId>
+      <artifactId>asdf-core</artifactId>
+      <version>0.1-alpha-8</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ejml</groupId>
+      <artifactId>ejml-simple</artifactId>
+      <version>0.44.0</version>
+    </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

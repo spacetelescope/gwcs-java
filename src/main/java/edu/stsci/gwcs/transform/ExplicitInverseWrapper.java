@@ -1,0 +1,41 @@
+package edu.stsci.gwcs.transform;
+
+import lombok.NonNull;
+
+public class ExplicitInverseWrapper implements Transform {
+    private final Transform delegate;
+    private final Transform inverse;
+
+    public ExplicitInverseWrapper(@NonNull Transform delegate, @NonNull Transform inverse) {
+        if (delegate.getOutputCount() != inverse.getInputCount()) {
+            throw new IllegalArgumentException("Dimension mismatch between forward and inverse models");
+        }
+        this.delegate = delegate;
+        this.inverse = inverse;
+    }
+
+    @Override
+    public int getInputCount() {
+        return delegate.getInputCount();
+    }
+
+    @Override
+    public int getOutputCount() {
+        return delegate.getOutputCount();
+    }
+
+    @Override
+    public void evaluate(final double[] inputs, final int inputOffset, final double[] outputs, final int outputOffset) {
+        delegate.evaluate(inputs, inputOffset, outputs, outputOffset);
+    }
+
+    @Override
+    public boolean hasInverse() {
+        return true;
+    }
+
+    @Override
+    public Transform getInverse() {
+        return inverse;
+    }
+}

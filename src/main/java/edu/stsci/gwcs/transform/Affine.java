@@ -1,6 +1,5 @@
 package edu.stsci.gwcs.transform;
 
-import edu.stsci.gwcs.util.DoubleUtils;
 import lombok.NonNull;
 import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
@@ -22,8 +21,11 @@ public class Affine implements Transform {
             }
         }
 
-        this.matrix = matrix;
-        this.translation = translation;
+        this.matrix = new double[this.dimensionCount][];
+        for (int i = 0; i < this.dimensionCount; i++) {
+            this.matrix[i] = matrix[i].clone();
+        }
+        this.translation = translation.clone();
     }
 
     @Override
@@ -38,10 +40,13 @@ public class Affine implements Transform {
 
     @Override
     public void evaluate(final double[] inputs, final int inputOffset, final double[] outputs, final int outputOffset) {
+        final double[] localInputs = new double[dimensionCount];
+        System.arraycopy(inputs, inputOffset, localInputs, 0, dimensionCount);
+
         for (int i = 0; i < dimensionCount; i++) {
             double sum = translation[i];
             for (int j = 0; j < dimensionCount; j++) {
-                sum = Math.fma(matrix[i][j], inputs[inputOffset + j], sum);
+                sum = Math.fma(matrix[i][j], localInputs[j], sum);
             }
             outputs[outputOffset + i] = sum;
         }
@@ -49,8 +54,12 @@ public class Affine implements Transform {
 
     @Override
     public boolean hasInverse() {
-        final SimpleMatrix m = new SimpleMatrix(this.matrix);
-        return Math.abs(m.determinant()) > DoubleUtils.EPSILON;
+        try {
+            new SimpleMatrix(this.matrix).invert();
+            return true;
+        } catch (final SingularMatrixException e) {
+            return false;
+        }
     }
 
     @Override

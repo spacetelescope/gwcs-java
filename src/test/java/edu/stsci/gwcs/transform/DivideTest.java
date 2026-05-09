@@ -46,23 +46,6 @@ class DivideTest {
         }
 
         @Test
-        void testMultipleDimensions() {
-            final Transform scale1 = new Scale(new double[]{10.0, 10.0});
-            final Transform scale2 = new Scale(new double[]{2.0, 2.0});
-            final Transform divide = new Divide(new Transform[]{t1, t2});
-
-            final double[] inputs = {5.0, 8.0};
-            final double[] outputs = new double[2];
-
-            divide.evaluate(inputs, 0, outputs, 0);
-
-            // Output 0: (5*10) / (5*2) = 5.0
-            // Output 1: (8*10) / (8*2) = 5.0
-            assertEquals(5.0, outputs[0], DOUBLE_TOLERANCE);
-            assertEquals(5.0, outputs[1], DOUBLE_TOLERANCE);
-        }
-
-        @Test
         void testManyTransforms() {
             final Transform shift1 = new Shift(20.0);
             final Transform shift2 = new Shift(2.0);

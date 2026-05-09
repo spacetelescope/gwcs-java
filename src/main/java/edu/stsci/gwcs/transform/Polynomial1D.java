@@ -10,13 +10,21 @@ public class Polynomial1D implements Transform {
     private final double mapIntercept;
 
     public Polynomial1D(@NonNull final double[] coefficients, double[] domain, double[] window) {
-        this.coefficients = coefficients;
+        if (coefficients.length == 0) {
+            throw new IllegalArgumentException("Coefficients array cannot be empty");
+        }
+
+        this.coefficients = coefficients.clone();
 
         domain = (domain != null) ? domain : new double[]{-1.0, 1.0};
         window = (window != null) ? window : new double[]{-1.0, 1.0};
 
         if (domain.length != 2 || window.length != 2) {
             throw new IllegalArgumentException("Domain/window arrays must have length 2");
+        }
+
+        if (domain[0] == domain[1]) {
+            throw new IllegalArgumentException("Domain endpoints must not be equal");
         }
 
         this.degree = this.coefficients.length - 1;

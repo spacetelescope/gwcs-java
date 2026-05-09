@@ -4,6 +4,9 @@ public class Shift implements Transform {
     private final double offset;
 
     public Shift(final double offset) {
+        if (!Double.isFinite(offset)) {
+            throw new IllegalArgumentException("Shift offset must be finite");
+        }
         this.offset = offset;
     }
 

@@ -10,6 +10,10 @@ public class RotateSequence3D implements Transform {
     private final double m20, m21, m22;
 
     public RotateSequence3D(@NonNull final double[] anglesDeg, @NonNull final String axesOrder) {
+        if (anglesDeg.length == 0) {
+            throw new IllegalArgumentException("RotateSequence3D requires at least one rotation");
+        }
+
         if (anglesDeg.length != axesOrder.length()) {
             throw new IllegalArgumentException("Number of angles must match the number of axes in axesOrder");
         }
@@ -32,15 +36,15 @@ public class RotateSequence3D implements Transform {
 
             if (axis == 'x') {
                 rot[0][0] = 1.0; rot[0][1] = 0.0;  rot[0][2] = 0.0;
-                rot[1][0] = 0.0; rot[1][1] = cos;  rot[1][2] = -sin;
-                rot[2][0] = 0.0; rot[2][1] = sin;  rot[2][2] = cos;
+                rot[1][0] = 0.0; rot[1][1] = cos;  rot[1][2] = sin;
+                rot[2][0] = 0.0; rot[2][1] = -sin; rot[2][2] = cos;
             } else if (axis == 'y') {
-                rot[0][0] = cos;  rot[0][1] = 0.0; rot[0][2] = sin;
+                rot[0][0] = cos;  rot[0][1] = 0.0; rot[0][2] = -sin;
                 rot[1][0] = 0.0;  rot[1][1] = 1.0; rot[1][2] = 0.0;
-                rot[2][0] = -sin; rot[2][1] = 0.0; rot[2][2] = cos;
+                rot[2][0] = sin;  rot[2][1] = 0.0; rot[2][2] = cos;
             } else if (axis == 'z') {
-                rot[0][0] = cos;  rot[0][1] = -sin; rot[0][2] = 0.0;
-                rot[1][0] = sin;  rot[1][1] = cos;  rot[1][2] = 0.0;
+                rot[0][0] = cos;  rot[0][1] = sin;  rot[0][2] = 0.0;
+                rot[1][0] = -sin; rot[1][1] = cos;  rot[1][2] = 0.0;
                 rot[2][0] = 0.0;  rot[2][1] = 0.0;  rot[2][2] = 1.0;
             } else {
                 throw new IllegalArgumentException("Invalid rotation axis: " + axis);

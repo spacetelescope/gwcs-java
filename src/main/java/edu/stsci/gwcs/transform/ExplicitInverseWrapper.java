@@ -6,8 +6,9 @@ public class ExplicitInverseWrapper implements Transform {
     private final Transform delegate;
     private final Transform inverse;
 
-    public ExplicitInverseWrapper(@NonNull Transform delegate, @NonNull Transform inverse) {
-        if (delegate.getOutputCount() != inverse.getInputCount()) {
+    public ExplicitInverseWrapper(@NonNull final Transform delegate, @NonNull final Transform inverse) {
+        if (delegate.getOutputCount() != inverse.getInputCount()
+                || inverse.getOutputCount() != delegate.getInputCount()) {
             throw new IllegalArgumentException("Dimension mismatch between forward and inverse models");
         }
         this.delegate = delegate;
@@ -36,6 +37,6 @@ public class ExplicitInverseWrapper implements Transform {
 
     @Override
     public Transform getInverse() {
-        return inverse;
+        return new ExplicitInverseWrapper(inverse, delegate);
     }
 }

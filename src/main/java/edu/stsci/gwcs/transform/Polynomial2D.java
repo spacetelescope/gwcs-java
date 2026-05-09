@@ -20,12 +20,16 @@ public class Polynomial2D implements Transform {
         }
 
         this.degree = coefficients.length - 1;
-        this.coefficients = coefficients;
 
         for (final double[] coefficient : coefficients) {
             if (coefficient == null || coefficient.length != coefficients.length) {
                 throw new IllegalArgumentException("Square coefficients matrix required");
             }
+        }
+
+        this.coefficients = new double[coefficients.length][];
+        for (int i = 0; i < coefficients.length; i++) {
+            this.coefficients[i] = coefficients[i].clone();
         }
 
         xDomain = (xDomain != null) ? xDomain : new double[]{-1.0, 1.0};
@@ -35,6 +39,10 @@ public class Polynomial2D implements Transform {
 
         if (xDomain.length != 2 || yDomain.length != 2 || xWindow.length != 2 || yWindow.length != 2) {
             throw new IllegalArgumentException("Domain/window arrays must have length 2");
+        }
+
+        if (xDomain[0] == xDomain[1] || yDomain[0] == yDomain[1]) {
+            throw new IllegalArgumentException("Domain endpoints must not be equal");
         }
 
         this.xMapSlope = (xWindow[1] - xWindow[0]) / (xDomain[1] - xDomain[0]);

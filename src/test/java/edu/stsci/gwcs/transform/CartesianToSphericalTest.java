@@ -79,4 +79,21 @@ class CartesianToSphericalTest {
         assertNotNull(inverse);
         assertInstanceOf(SphericalToCartesian.class, inverse);
     }
+
+    @Test
+    void testRoundTrip() {
+        final CartesianToSpherical c2s = new CartesianToSpherical(true);
+        final SphericalToCartesian s2c = new SphericalToCartesian(true);
+
+        final double[] cartesian = {1.0, 1.0, Math.sqrt(2.0)};
+        final double[] spherical = c2s.evaluate(cartesian);
+        final double[] recovered = s2c.evaluate(spherical);
+
+        final double r = Math.sqrt(cartesian[0] * cartesian[0]
+                + cartesian[1] * cartesian[1]
+                + cartesian[2] * cartesian[2]);
+        assertEquals(cartesian[0] / r, recovered[0], DOUBLE_TOLERANCE);
+        assertEquals(cartesian[1] / r, recovered[1], DOUBLE_TOLERANCE);
+        assertEquals(cartesian[2] / r, recovered[2], DOUBLE_TOLERANCE);
+    }
 }

@@ -63,13 +63,13 @@
     <dependency>
       <groupId>org.asdf-format</groupId>
       <artifactId>asdf-core</artifactId>
-      <version>0.1-alpha-8</version>
+      <version>${asdf.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.ejml</groupId>
       <artifactId>ejml-simple</artifactId>
-      <version>0.44.0</version>
+      <version>${ejml.version}</version>
     </dependency>
 
     <dependency>

@@ -17,13 +17,16 @@ public final class BoundingBoxWrapper implements Transform {
         this.delegate = delegate;
         this.fillValue = fillValue;
 
-        for (final double[] interval : intervals) {
-            if (interval == null || interval.length != 2) {
+        this.intervals = new double[intervals.length][];
+        for (int i = 0; i < intervals.length; i++) {
+            if (intervals[i] == null || intervals[i].length != 2) {
                 throw new IllegalArgumentException("Each interval must be a [min, max] pair");
             }
+            if (intervals[i][0] > intervals[i][1]) {
+                throw new IllegalArgumentException("Interval min must not exceed max");
+            }
+            this.intervals[i] = intervals[i].clone();
         }
-
-        this.intervals = intervals;
     }
 
     @Override

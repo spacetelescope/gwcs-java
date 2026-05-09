@@ -41,8 +41,11 @@ public class RemapAxes implements Transform {
 
     @Override
     public void evaluate(final double[] inputs, final int inputOffset, final double[] outputs, final int outputOffset) {
+        final double[] localInputs = new double[inputCount];
+        System.arraycopy(inputs, inputOffset, localInputs, 0, inputCount);
+
         for (int i = 0; i < outputCount; i++) {
-            outputs[outputOffset + i] = inputs[inputOffset + mapping[i]];
+            outputs[outputOffset + i] = localInputs[mapping[i]];
         }
     }
 

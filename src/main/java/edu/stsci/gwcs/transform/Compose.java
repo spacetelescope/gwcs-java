@@ -26,7 +26,7 @@ public class Compose implements Transform {
         }
 
         this.maxIntermediateOutputCount = maxOutputCount;
-        this.transforms = transforms;
+        this.transforms = transforms.clone();
     }
 
     @Override

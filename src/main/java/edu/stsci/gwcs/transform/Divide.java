@@ -21,7 +21,7 @@ public class Divide implements Transform {
             }
         }
 
-        this.transforms = transforms;
+        this.transforms = transforms.clone();
     }
 
     @Override

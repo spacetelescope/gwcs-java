@@ -29,11 +29,14 @@ public class Concatenate implements Transform {
 
     @Override
     public void evaluate(final double[] inputs, final int inputOffset, final double[] outputs, final int outputOffset) {
-        int currentInputOffset = inputOffset;
+        final double[] localInputs = new double[inputCount];
+        System.arraycopy(inputs, inputOffset, localInputs, 0, inputCount);
+
+        int currentInputOffset = 0;
         int currentOutputOffset = outputOffset;
 
         for (final Transform transform : transforms) {
-            transform.evaluate(inputs, currentInputOffset, outputs, currentOutputOffset);
+            transform.evaluate(localInputs, currentInputOffset, outputs, currentOutputOffset);
 
             currentInputOffset += transform.getInputCount();
             currentOutputOffset += transform.getOutputCount();

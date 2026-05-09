@@ -4,6 +4,9 @@ public class Scale implements Transform {
     private final double factor;
 
     public Scale(final double factor) {
+        if (!Double.isFinite(factor)) {
+            throw new IllegalArgumentException("Scale factor must be finite");
+        }
         this.factor = factor;
     }
 

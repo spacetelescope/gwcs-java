@@ -93,6 +93,24 @@ class Polynomial2DTest {
     }
 
     @Test
+    void testRejectsWrongLengthDomain() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Polynomial2D(
+                        new double[][]{{1.0}},
+                        new double[]{1.0, 2.0, 3.0}, null, null, null
+                ));
+    }
+
+    @Test
+    void testRejectsEqualYDomainEndpoints() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Polynomial2D(
+                        new double[][]{{1.0}},
+                        null, new double[]{3.0, 3.0}, null, null
+                ));
+    }
+
+    @Test
     void testRejectsEqualDomainEndpoints() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Polynomial2D(

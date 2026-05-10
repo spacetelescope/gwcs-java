@@ -21,6 +21,12 @@ class ScaleTest {
     }
 
     @Test
+    void nonFiniteFactorThrows() {
+        assertThrows(IllegalArgumentException.class, () -> new Scale(Double.NaN));
+        assertThrows(IllegalArgumentException.class, () -> new Scale(Double.POSITIVE_INFINITY));
+    }
+
+    @Test
     void testZeroFactor() {
         final Scale scale = new Scale(0.0);
         assertEquals(1, scale.getInputCount());

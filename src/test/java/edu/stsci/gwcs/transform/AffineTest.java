@@ -72,6 +72,24 @@ class AffineTest {
     }
 
     @Test
+    void emptyMatrixThrows() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Affine(new double[][]{}, new double[]{}));
+    }
+
+    @Test
+    void mismatchedTranslationLengthThrows() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Affine(new double[][]{{1.0}}, new double[]{1.0, 2.0}));
+    }
+
+    @Test
+    void nonSquareMatrixThrows() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Affine(new double[][]{{1.0, 2.0}, {3.0}}, new double[]{0.0, 0.0}));
+    }
+
+    @Test
     void testNonInvertible() {
         final double[][] matrix = {
                 {2.0, 4.0},

@@ -108,6 +108,12 @@ class RotateSequence3DTest {
     }
 
     @Test
+    void testRejectsEmptyAngles() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new RotateSequence3D(new double[]{}, ""));
+    }
+
+    @Test
     void testRejectsInvalidAxis() {
         assertThrows(IllegalArgumentException.class,
                 () -> new RotateSequence3D(new double[]{90.0}, "w"));

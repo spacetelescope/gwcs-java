@@ -58,4 +58,13 @@ class ExplicitInverseWrapperTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new ExplicitInverseWrapper(twoToThree, twoToTwo));
     }
+
+    @Test
+    void testRejectsInverseOutputMismatchesForwardInput() {
+        final Transform twoToTwo = new Identity(2);
+        final Transform twoToThree = new SphericalToCartesian();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new ExplicitInverseWrapper(twoToTwo, twoToThree));
+    }
 }

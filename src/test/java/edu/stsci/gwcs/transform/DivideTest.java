@@ -62,6 +62,19 @@ class DivideTest {
     }
 
     @Nested
+    public class InputOutputCounts {
+        @Test
+        void countsMatchDelegateTransforms() {
+            final Transform t1 = new Shift(1.0);
+            final Transform t2 = new Shift(2.0);
+            final Transform divide = new Divide(new Transform[]{t1, t2});
+
+            assertEquals(1, divide.getInputCount());
+            assertEquals(1, divide.getOutputCount());
+        }
+    }
+
+    @Nested
     public class Inverse {
         @Test
         void testInvertibility() {

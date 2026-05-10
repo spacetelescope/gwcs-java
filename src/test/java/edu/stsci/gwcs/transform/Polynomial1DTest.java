@@ -69,6 +69,12 @@ class Polynomial1DTest {
     }
 
     @Test
+    void testRejectsInvalidWindowLength() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Polynomial1D(new double[]{1.0}, null, new double[]{0.0, 1.0, 2.0}));
+    }
+
+    @Test
     void testRejectsEqualDomainEndpoints() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Polynomial1D(new double[]{1.0}, new double[]{5.0, 5.0}, null));

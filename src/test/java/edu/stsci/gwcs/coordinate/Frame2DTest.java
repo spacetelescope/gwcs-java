@@ -82,11 +82,22 @@ class Frame2DTest {
         }
 
         @Test
-        void negativeAxisOrderValues() {
+        void negativeFirstAxisOrderValue() {
             assertThrows(IllegalArgumentException.class, () -> new Frame2D(
                     "detector",
                     new String[]{"x", "y"},
                     new int[]{-1, 0},
+                    new String[]{"custom:x", "custom:y"},
+                    new String[]{"pixel", "pixel"}
+            ));
+        }
+
+        @Test
+        void negativeSecondAxisOrderValue() {
+            assertThrows(IllegalArgumentException.class, () -> new Frame2D(
+                    "detector",
+                    new String[]{"x", "y"},
+                    new int[]{0, -1},
                     new String[]{"custom:x", "custom:y"},
                     new String[]{"pixel", "pixel"}
             ));

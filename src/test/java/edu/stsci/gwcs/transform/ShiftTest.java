@@ -14,6 +14,12 @@ class ShiftTest {
     }
 
     @Test
+    void nonFiniteOffsetThrows() {
+        assertThrows(IllegalArgumentException.class, () -> new Shift(Double.NaN));
+        assertThrows(IllegalArgumentException.class, () -> new Shift(Double.NEGATIVE_INFINITY));
+    }
+
+    @Test
     void testNegativeOffset() {
         final Shift shift = new Shift(-3.0);
         final double[] outputs = shift.evaluate(5.0);

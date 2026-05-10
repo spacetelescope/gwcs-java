@@ -49,6 +49,22 @@ class BoundingBoxWrapperTest {
         }
 
         @Test
+        void testReversedInterval() {
+            final double[][] intervals = {{5.0, 1.0}, {0.0, 1.0}};
+
+            assertThrows(IllegalArgumentException.class,
+                    () -> new BoundingBoxWrapper(delegate, intervals, FILL_VALUE));
+        }
+
+        @Test
+        void testNullInterval() {
+            final double[][] intervals = {{0.0, 1.0}, null};
+
+            assertThrows(IllegalArgumentException.class,
+                    () -> new BoundingBoxWrapper(delegate, intervals, FILL_VALUE));
+        }
+
+        @Test
         void testInvalidIntervalLength() {
             final double[][] intervals = {{-1.0, 1.0}, {0.0, 1.0, 2.0}};
 

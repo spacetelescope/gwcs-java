@@ -55,6 +55,22 @@ class FitsWcsImagingTest {
     }
 
     @Nested
+    class AlphaNormalization {
+        @Test
+        void alphaWrapsToPositiveRange() {
+            final FitsWcsImaging wcs = new FitsWcsImaging(
+                    new double[]{512.0, 512.0},
+                    new double[]{1.0, 45.0},
+                    new double[]{-0.01, 0.01},
+                    IDENTITY_PC
+            );
+            final double[] result = wcs.evaluate(612.0, 512.0);
+            assertTrue(result[0] >= 0.0 && result[0] < 360.0,
+                    "Alpha should be in [0, 360) but was " + result[0]);
+        }
+    }
+
+    @Nested
     class RoundTrip {
         @Test
         void identityScaleRoundTrip() {

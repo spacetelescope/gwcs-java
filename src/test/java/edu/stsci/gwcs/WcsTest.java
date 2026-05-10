@@ -262,15 +262,42 @@ class WcsTest {
                     new Step(celestialFrame(), null)
             };
 
-            final Concatenate mismatch = new Concatenate(new Transform[]{
-                    new Identity(1),
-                    new Identity(1),
-                    new Constant(1, 0.0)
-            });
+            final SphericalToCartesian mismatch = new SphericalToCartesian();
 
             assertThrows(IllegalArgumentException.class, () -> new Wcs(
                     "wcs", steps, null, mismatch
             ));
+        }
+    }
+
+    @Nested
+    class TransformAccessors {
+        @Test
+        void getForwardTransform() {
+            final Step[] steps = {
+                    new Step(detectorFrame(), new Identity(2)),
+                    new Step(celestialFrame(), null)
+            };
+
+            final Wcs wcs = new Wcs("wcs", steps, null, null);
+            final Transform forward = wcs.getForwardTransform();
+            assertNotNull(forward);
+            final double[] result = forward.evaluate(1.0, 2.0);
+            assertEquals(1.0, result[0], DOUBLE_TOLERANCE);
+            assertEquals(2.0, result[1], DOUBLE_TOLERANCE);
+        }
+
+        @Test
+        void getBackwardTransformWhenInvertible() {
+            final Step[] steps = {
+                    new Step(detectorFrame(), new Identity(2)),
+                    new Step(celestialFrame(), null)
+            };
+
+            final Wcs wcs = new Wcs("wcs", steps, null, null);
+            assertTrue(wcs.hasInverse());
+            final Transform backward = wcs.getBackwardTransform();
+            assertNotNull(backward);
         }
     }
 
@@ -291,6 +318,23 @@ class WcsTest {
             final Wcs wcs = new Wcs("non_invertible", steps, null, null);
             assertFalse(wcs.hasInverse());
             assertThrows(UnsupportedOperationException.class, () -> wcs.evaluateInverse(1.0, 2.0));
+        }
+
+        @Test
+        void evaluateInverseWithOffsetThrows() {
+            final Concatenate polyTransform = new Concatenate(new Transform[]{
+                    new Polynomial1D(new double[]{1.0, 2.0, 3.0}, null, null),
+                    new Polynomial1D(new double[]{4.0, 5.0, 6.0}, null, null)
+            });
+
+            final Step[] steps = {
+                    new Step(detectorFrame(), polyTransform),
+                    new Step(intermediateFrame("output"), null)
+            };
+
+            final Wcs wcs = new Wcs("non_invertible", steps, null, null);
+            assertThrows(UnsupportedOperationException.class,
+                    () -> wcs.evaluateInverse(new double[]{1.0, 2.0}, 0, new double[2], 0));
         }
 
         @Test

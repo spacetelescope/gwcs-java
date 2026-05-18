@@ -34,8 +34,8 @@ public class Frame2D implements Frame {
         }
 
         this.name = name;
-        this.axisNames = axisNames.clone();
         this.axisOrder = axisOrder.clone();
+        this.axisNames = axisNames.clone();
         this.axisPhysicalTypes = axisPhysicalTypes.clone();
         this.units = units.clone();
     }
@@ -69,4 +69,5 @@ public class Frame2D implements Frame {
     public String[] getUnits() {
         return units.clone();
     }
+
 }

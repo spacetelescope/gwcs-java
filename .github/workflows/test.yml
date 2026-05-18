@@ -25,9 +25,10 @@ jobs:
         with:
           java-version: 11
           distribution: corretto
+          cache: maven
 
       - name: Execute tests
-        run: mvn clean verify jacoco:report -Dgpg.skip
+        run: mvn clean verify
 
       - name: Add code coverage PR comment
         uses: madrapps/jacoco-report@v1.7.2

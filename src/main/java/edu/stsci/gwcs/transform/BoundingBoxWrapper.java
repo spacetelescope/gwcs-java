@@ -22,6 +22,9 @@ public final class BoundingBoxWrapper implements Transform {
             if (intervals[i] == null || intervals[i].length != 2) {
                 throw new IllegalArgumentException("Each interval must be a [min, max] pair");
             }
+            if (Double.isNaN(intervals[i][0]) || Double.isNaN(intervals[i][1])) {
+                throw new IllegalArgumentException("Interval bounds must not be NaN");
+            }
             if (intervals[i][0] > intervals[i][1]) {
                 throw new IllegalArgumentException("Interval min must not exceed max");
             }
@@ -65,6 +68,10 @@ public final class BoundingBoxWrapper implements Transform {
         return delegate.hasInverse();
     }
 
+    /**
+     * Returns the delegate's inverse without any bounding box applied,
+     * matching astropy's convention (Model.inverse sets bounding_box = None).
+     */
     @Override
     public Transform getInverse() {
         return delegate.getInverse();

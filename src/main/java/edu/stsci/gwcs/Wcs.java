@@ -1,7 +1,7 @@
 package edu.stsci.gwcs;
 
 import edu.stsci.gwcs.coordinate.Frame;
-import edu.stsci.gwcs.transform.Compose;
+import edu.stsci.gwcs.transform.compound.Compose;
 import edu.stsci.gwcs.transform.Transform;
 import lombok.NonNull;
 
@@ -65,6 +65,13 @@ public class Wcs {
 
         this.name = name;
         this.steps = steps.clone();
+        if (pixelShape != null && pixelShape.length != steps[0].getFrame().getAxisCount()) {
+            throw new IllegalArgumentException(
+                    "pixelShape length (" + pixelShape.length
+                            + ") does not match input frame axis count ("
+                            + steps[0].getFrame().getAxisCount() + ")"
+            );
+        }
         this.pixelShape = pixelShape != null ? pixelShape.clone() : null;
 
         final Transform[] stepTransforms = new Transform[steps.length - 1];

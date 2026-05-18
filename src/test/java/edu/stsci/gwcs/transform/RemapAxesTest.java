@@ -89,4 +89,30 @@ class RemapAxesTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new RemapAxes(new int[]{0}, -1));
     }
+
+    @Test
+    void testSameArrayAliasing() {
+        final RemapAxes remap = new RemapAxes(new int[]{1, 0}, 2);
+        final double[] buffer = {10.0, 20.0, 0.0, 0.0};
+        remap.evaluate(buffer, 0, buffer, 2);
+        assertEquals(20.0, buffer[2], DOUBLE_TOLERANCE);
+        assertEquals(10.0, buffer[3], DOUBLE_TOLERANCE);
+    }
+
+    @Test
+    void offsetVariantEvaluateRespectsBuffers() {
+        final RemapAxes remap = new RemapAxes(new int[]{2, 0}, 3);
+        final double[] sampleInputs = {10.0, 20.0, 30.0};
+        final double[] expected = remap.evaluate(sampleInputs);
+
+        final double[] inputs = new double[]{99.0, 99.0, 10.0, 20.0, 30.0, 99.0};
+        final double[] outputs = new double[]{77.0, 77.0, 77.0, 77.0, 77.0};
+        remap.evaluate(inputs, 2, outputs, 1);
+
+        assertEquals(77.0, outputs[0]);
+        assertEquals(expected[0], outputs[1], DOUBLE_TOLERANCE);
+        assertEquals(expected[1], outputs[2], DOUBLE_TOLERANCE);
+        assertEquals(77.0, outputs[3]);
+        assertEquals(77.0, outputs[4]);
+    }
 }

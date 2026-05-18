@@ -46,6 +46,15 @@ public class CompositeFrame implements Frame {
             offset += frame.getAxisCount();
         }
 
+        for (int i = 0; i < axisCount; i++) {
+            if (!seenPositions.contains(i)) {
+                throw new IllegalArgumentException(
+                        "axisOrder values must form a contiguous range [0, " + (axisCount - 1)
+                                + "] but value " + i + " is missing"
+                );
+            }
+        }
+
         final int[] sortIndices = sortedIndices(concatenatedOrder);
         this.axisOrder = reorder(concatenatedOrder, sortIndices);
         this.axisNames = reorder(concatenatedNames, sortIndices);

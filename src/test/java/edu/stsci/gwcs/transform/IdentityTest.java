@@ -47,8 +47,33 @@ class IdentityTest {
     }
 
     @Test
+    void testNaNPassThrough() {
+        final Identity identity = new Identity(2);
+        final double[] outputs = identity.evaluate(Double.NaN, 3.0);
+        assertTrue(Double.isNaN(outputs[0]));
+        assertEquals(3.0, outputs[1], DOUBLE_TOLERANCE);
+    }
+
+    @Test
     void testRejectsZeroDimensions() {
         assertThrows(IllegalArgumentException.class, () -> new Identity(0));
         assertThrows(IllegalArgumentException.class, () -> new Identity(-1));
+    }
+
+    @Test
+    void offsetVariantEvaluateRespectsBuffers() {
+        final Identity identity = new Identity(2);
+        final double[] sampleInputs = {3.0, 4.0};
+        final double[] expected = identity.evaluate(sampleInputs);
+
+        final double[] inputs = new double[]{99.0, 99.0, 3.0, 4.0, 99.0};
+        final double[] outputs = new double[]{77.0, 77.0, 77.0, 77.0, 77.0};
+        identity.evaluate(inputs, 2, outputs, 1);
+
+        assertEquals(77.0, outputs[0]);
+        assertEquals(expected[0], outputs[1], DOUBLE_TOLERANCE);
+        assertEquals(expected[1], outputs[2], DOUBLE_TOLERANCE);
+        assertEquals(77.0, outputs[3]);
+        assertEquals(77.0, outputs[4]);
     }
 }

@@ -73,6 +73,24 @@ class CompositeFrameTest {
     }
 
     @Nested
+    class ContiguityValidation {
+        @Test
+        void testNonContiguousAxesThrows() {
+            final Frame2D frameA = makeDetectorFrame(new int[]{0, 1});
+            final Frame2D frameB = new Frame2D(
+                    "sky",
+                    new String[]{"lon", "lat"},
+                    new int[]{4, 5},
+                    new String[]{"pos.eq.ra", "pos.eq.dec"},
+                    new String[]{"deg", "deg"}
+            );
+
+            assertThrows(IllegalArgumentException.class,
+                    () -> new CompositeFrame("composite", new Frame[]{frameA, frameB}));
+        }
+    }
+
+    @Nested
     class AxisOrderRemapping {
         @Test
         void axisOrderSortedByPipelinePosition() {

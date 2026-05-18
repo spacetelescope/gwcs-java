@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static edu.stsci.gwcs.testing.TestingUtils.DOUBLE_TOLERANCE;
 import static org.junit.jupiter.api.Assertions.*;
+import edu.stsci.gwcs.transform.polynomial.Polynomial1D;
+import edu.stsci.gwcs.transform.functional.Scale;
+import edu.stsci.gwcs.transform.functional.Shift;
+import edu.stsci.gwcs.transform.geometry.SphericalToCartesian;
 
 class ExplicitInverseWrapperTest {
     @Test
@@ -66,5 +70,21 @@ class ExplicitInverseWrapperTest {
 
         assertThrows(IllegalArgumentException.class,
                 () -> new ExplicitInverseWrapper(twoToTwo, twoToThree));
+    }
+
+    @Test
+    void offsetVariantEvaluateRespectsBuffers() {
+        final ExplicitInverseWrapper wrapper = new ExplicitInverseWrapper(new Scale(3.0), new Scale(1.0 / 3.0));
+        final double[] sampleInputs = {5.0};
+        final double[] expected = wrapper.evaluate(sampleInputs);
+
+        final double[] inputs = new double[]{99.0, 99.0, 5.0, 99.0};
+        final double[] outputs = new double[]{77.0, 77.0, 77.0, 77.0};
+        wrapper.evaluate(inputs, 2, outputs, 1);
+
+        assertEquals(77.0, outputs[0]);
+        assertEquals(expected[0], outputs[1], DOUBLE_TOLERANCE);
+        assertEquals(77.0, outputs[2]);
+        assertEquals(77.0, outputs[3]);
     }
 }

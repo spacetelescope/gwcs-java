@@ -5,6 +5,11 @@ import edu.stsci.gwcs.coordinate.CompositeFrame;
 import edu.stsci.gwcs.coordinate.Frame;
 import edu.stsci.gwcs.coordinate.Frame2D;
 import edu.stsci.gwcs.transform.*;
+import edu.stsci.gwcs.transform.compound.Concatenate;
+import edu.stsci.gwcs.transform.functional.Affine;
+import edu.stsci.gwcs.transform.polynomial.Polynomial1D;
+import edu.stsci.gwcs.transform.fits.FitsWcsImaging;
+import edu.stsci.gwcs.transform.geometry.SphericalToCartesian;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -79,7 +84,7 @@ class WcsTest {
         @Test
         void twoStepFitsWcsRoundTrip() {
             final FitsWcsImaging fitsWcs = new FitsWcsImaging(
-                    new double[]{512.0, 512.0},
+                    new double[]{511.0, 511.0},
                     new double[]{180.0, 45.0},
                     new double[]{-1e-4, 1e-4},
                     new double[][]{{1.0, 0.0}, {0.0, 1.0}}
@@ -92,12 +97,12 @@ class WcsTest {
 
             final Wcs wcs = new Wcs("coadd_wcs", steps, null, null);
 
-            final double[] sky = wcs.evaluate(520.0, 530.0);
+            final double[] sky = wcs.evaluate(519.0, 529.0);
             assertEquals(2, sky.length);
 
             final double[] pixel = wcs.evaluateInverse(sky);
-            assertEquals(520.0, pixel[0], ROUND_TRIP_TOLERANCE);
-            assertEquals(530.0, pixel[1], ROUND_TRIP_TOLERANCE);
+            assertEquals(519.0, pixel[0], ROUND_TRIP_TOLERANCE);
+            assertEquals(529.0, pixel[1], ROUND_TRIP_TOLERANCE);
         }
     }
 
@@ -394,6 +399,20 @@ class WcsTest {
 
             assertEquals(5.0, outputs[2], ROUND_TRIP_TOLERANCE);
             assertEquals(5.0, outputs[3], ROUND_TRIP_TOLERANCE);
+        }
+    }
+
+    @Nested
+    class PixelShapeValidation {
+        @Test
+        void testPixelShapeLengthMismatchThrows() {
+            final Step[] steps = {
+                    new Step(detectorFrame(), new Identity(2)),
+                    new Step(celestialFrame(), null)
+            };
+
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Wcs("wcs", steps, new int[]{1024}, null));
         }
     }
 

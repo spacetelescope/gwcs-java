@@ -65,6 +65,22 @@ class BoundingBoxWrapperTest {
         }
 
         @Test
+        void testNanIntervalBoundsRejected() {
+            final double[][] intervals = {{Double.NaN, 10.0}, {0.0, 1.0}};
+            assertThrows(IllegalArgumentException.class,
+                    () -> new BoundingBoxWrapper(delegate, intervals, FILL_VALUE));
+        }
+
+        @Test
+        void testInfinityIntervalBoundsAccepted() {
+            final double[][] intervals = {{0.0, Double.POSITIVE_INFINITY}, {Double.NEGATIVE_INFINITY, 1.0}};
+            final BoundingBoxWrapper wrapper = new BoundingBoxWrapper(delegate, intervals, FILL_VALUE);
+            final double[] result = wrapper.evaluate(100.0, -100.0);
+            assertEquals(200.0, result[0], DOUBLE_TOLERANCE);
+            assertEquals(-200.0, result[1], DOUBLE_TOLERANCE);
+        }
+
+        @Test
         void testInvalidIntervalLength() {
             final double[][] intervals = {{-1.0, 1.0}, {0.0, 1.0, 2.0}};
 
@@ -136,6 +152,32 @@ class BoundingBoxWrapperTest {
     }
 
     @Test
+    void testOutsideBoundsWithNaNFillValue() {
+        final double[][] intervals = {{0.0, 10.0}, {-5.0, 5.0}};
+        final BoundingBoxWrapper transform = new BoundingBoxWrapper(delegate, intervals, Double.NaN);
+
+        final double[] inputs = {15.0, 0.0};
+        final double[] outputs = new double[2];
+        transform.evaluate(inputs, 0, outputs, 0);
+
+        assertTrue(Double.isNaN(outputs[0]));
+        assertTrue(Double.isNaN(outputs[1]));
+    }
+
+    @Test
+    void testDegenerateZeroWidthInterval() {
+        final double[][] intervals = {{5.0, 5.0}, {0.0, 1.0}};
+        final BoundingBoxWrapper transform = new BoundingBoxWrapper(delegate, intervals, -999.0);
+
+        final double[] outputs = transform.evaluate(5.0, 0.5);
+        assertEquals(10.0, outputs[0], DOUBLE_TOLERANCE);
+        assertEquals(1.0, outputs[1], DOUBLE_TOLERANCE);
+
+        final double[] outsideOutputs = transform.evaluate(5.001, 0.5);
+        assertEquals(-999.0, outsideOutputs[0], DOUBLE_TOLERANCE);
+    }
+
+    @Test
     void testPassThroughMethods() {
         final double[][] intervals = {{0.0, 10.0}, {-5.0, 5.0}};
         final BoundingBoxWrapper transform = new BoundingBoxWrapper(delegate, intervals, FILL_VALUE);
@@ -145,5 +187,23 @@ class BoundingBoxWrapperTest {
         assertTrue(transform.hasInverse());
 
         assertEquals(delegate, transform.getInverse());
+    }
+
+    @Test
+    void offsetVariantEvaluateRespectsBuffers() {
+        final double[][] intervals = {{0.0, 10.0}, {-5.0, 5.0}};
+        final BoundingBoxWrapper transform = new BoundingBoxWrapper(delegate, intervals, FILL_VALUE);
+        final double[] sampleInputs = {5.0, 0.0};
+        final double[] expected = transform.evaluate(sampleInputs);
+
+        final double[] inputs = new double[]{99.0, 99.0, 5.0, 0.0, 99.0};
+        final double[] outputs = new double[]{77.0, 77.0, 77.0, 77.0, 77.0};
+        transform.evaluate(inputs, 2, outputs, 1);
+
+        assertEquals(77.0, outputs[0]);
+        assertEquals(expected[0], outputs[1], DOUBLE_TOLERANCE);
+        assertEquals(expected[1], outputs[2], DOUBLE_TOLERANCE);
+        assertEquals(77.0, outputs[3]);
+        assertEquals(77.0, outputs[4]);
     }
 }

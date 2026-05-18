@@ -4,8 +4,8 @@
   <artifactId>gwcs-java</artifactId>
   <version>${revision}</version>
 
-  <name>roman-datamodels-parent</name>
-  <description>Java implementation of data models for the Nancy Grace Roman Space Telescope</description>
+  <name>gwcs-java</name>
+  <description>Java implementation of the Generalized World Coordinate System (GWCS)</description>
   <url>https://github.com/spacetelescope/gwcs-java</url>
 
   <licenses>
@@ -39,12 +39,11 @@
     <ejml.version>0.44.0</ejml.version>
     <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
     <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
-    <jblosc.version>1.0.1</jblosc.version>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
     <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
     <maven-install-plugin.version>3.1.2</maven-install-plugin.version>
     <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
-    <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+    <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
     <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
@@ -55,9 +54,6 @@
     <mockito.version>5.18.0</mockito.version>
   </properties>
 
-  <dependencyManagement>
-    <dependencies/>
-  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -89,6 +85,13 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
@@ -175,7 +178,7 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>${maven-javadoc-plugin.version}</version>
           <configuration>
-            <source>8</source>
+            <source>11</source>
           </configuration>
           <executions>
             <execution>
@@ -240,26 +243,44 @@
         <artifactId>maven-source-plugin</artifactId>
       </plugin>
       <plugin>
-        <artifactId>maven-gpg-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.sonatype.central</groupId>
-        <artifactId>central-publishing-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco-plugin.version}</version>
         <executions>
           <execution>
+            <id>prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>report</goal>
             </goals>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <reporting>
     <outputDirectory>

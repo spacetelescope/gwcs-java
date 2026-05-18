@@ -28,3 +28,13 @@ replay_pid*
 build
 
 .flattened-pom.xml
+
+# IDE / editor metadata
+.classpath
+.factorypath
+.project
+.settings/
+.idea/
+
+# ASDF test fixtures left at repo root
+*.asdf

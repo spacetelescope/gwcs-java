@@ -2,7 +2,7 @@ package edu.stsci.gwcs.transform.rotation;
 
 import edu.stsci.gwcs.transform.util.WcsMath;
 
-final class RotationMatrix {
+class RotationMatrix {
 
     private RotationMatrix() {
     }

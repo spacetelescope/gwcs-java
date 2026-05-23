@@ -8,7 +8,7 @@ package edu.stsci.gwcs.transform.util;
  *
  * <p>Mirrors wcslib's wcstrig.c (sind/cosd/tand/asind/atan2d).
  */
-public final class WcsMath {
+public class WcsMath {
 
     private static final double ASIN_CLAMP_TOL = 1.0e-10;
 

@@ -4,7 +4,7 @@ import lombok.NonNull;
 import java.util.Map;
 import edu.stsci.gwcs.transform.Transform;
 
-public final class FixInputs implements Transform {
+public class FixInputs implements Transform {
     private final Transform delegate;
     private final int delegateInputCount;
     private final int inputCount;

@@ -2,7 +2,7 @@ package edu.stsci.gwcs.transform;
 
 import lombok.NonNull;
 
-public final class BoundingBoxWrapper implements Transform {
+public class BoundingBoxWrapper implements Transform {
     private final Transform delegate;
     private final double[][] intervals;
     private final double fillValue;

@@ -22,24 +22,15 @@ public final class WcsDeserializer {
     }
 
     public Wcs deserialize(@NonNull final AsdfNode node) {
-        return checkedCast(registry.deserialize(node), Wcs.class, node);
+        return registry.deserialize(node, Wcs.class);
     }
 
     public Transform deserializeTransform(@NonNull final AsdfNode node) {
-        return checkedCast(registry.deserialize(node), Transform.class, node);
+        return registry.deserialize(node, Transform.class);
     }
 
     public Frame deserializeFrame(@NonNull final AsdfNode node) {
-        return checkedCast(registry.deserialize(node), Frame.class, node);
-    }
-
-    private <T> T checkedCast(final Object result, final Class<T> expectedType, final AsdfNode node) {
-        if (!expectedType.isInstance(result)) {
-            throw new ClassCastException(
-                    "Tag " + node.getTag() + " produced " + result.getClass().getName()
-                            + ", expected " + expectedType.getName());
-        }
-        return expectedType.cast(result);
+        return registry.deserialize(node, Frame.class);
     }
 
     public TagRegistry getRegistry() {

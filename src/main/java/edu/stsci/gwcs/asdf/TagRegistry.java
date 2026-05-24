@@ -14,13 +14,19 @@ public class TagRegistry {
         handlers.put(tag, handler);
     }
 
-    public Object deserialize(@NonNull final AsdfNode node) {
+    public <T> T deserialize(@NonNull final AsdfNode node, @NonNull final Class<T> expectedType) {
         final String tag = node.getTag();
         final Function<AsdfNode, Object> handler = handlers.get(tag);
         if (handler == null) {
             throw new IllegalArgumentException("Unrecognized ASDF tag: " + tag);
         }
-        return handler.apply(node);
+        final Object result = handler.apply(node);
+        if (!expectedType.isInstance(result)) {
+            throw new ClassCastException(
+                    "Tag " + tag + " produced " + result.getClass().getName()
+                            + ", expected " + expectedType.getName());
+        }
+        return expectedType.cast(result);
     }
 
     public boolean hasHandler(final String tag) {

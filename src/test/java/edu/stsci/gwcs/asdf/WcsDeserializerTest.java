@@ -29,7 +29,7 @@ class WcsDeserializerTest {
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:asdf/transform/shift-1.3.0");
 
-        final Object result = registry.deserialize(node);
+        final Object result = registry.deserialize(node, Object.class);
         assertSame(sentinel, result);
     }
 
@@ -42,7 +42,7 @@ class WcsDeserializerTest {
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:example.org:custom/widget-1.0.0");
 
-        final Object result = registry.deserialize(node);
+        final Object result = registry.deserialize(node, Object.class);
         assertSame(customResult, result);
     }
 

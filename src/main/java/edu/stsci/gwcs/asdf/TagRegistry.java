@@ -1,0 +1,29 @@
+package edu.stsci.gwcs.asdf;
+
+import lombok.NonNull;
+import org.asdfformat.asdf.node.AsdfNode;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
+public class TagRegistry {
+    private final Map<String, Function<AsdfNode, Object>> handlers = new HashMap<>();
+
+    public void register(@NonNull final String tag, @NonNull final Function<AsdfNode, Object> handler) {
+        handlers.put(tag, handler);
+    }
+
+    public Object deserialize(@NonNull final AsdfNode node) {
+        final String tag = node.getTag();
+        final Function<AsdfNode, Object> handler = handlers.get(tag);
+        if (handler == null) {
+            throw new IllegalArgumentException("Unrecognized ASDF tag: " + tag);
+        }
+        return handler.apply(node);
+    }
+
+    public boolean hasHandler(final String tag) {
+        return handlers.containsKey(tag);
+    }
+}

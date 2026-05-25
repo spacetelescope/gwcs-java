@@ -1,9 +1,15 @@
 package edu.stsci.gwcs.asdf;
 
 import edu.stsci.gwcs.Wcs;
+import edu.stsci.gwcs.asdf.converter.AffineConverter;
 import edu.stsci.gwcs.asdf.converter.CelestialFrameConverter;
 import edu.stsci.gwcs.asdf.converter.CompositeFrameConverter;
+import edu.stsci.gwcs.asdf.converter.ConstantConverter;
 import edu.stsci.gwcs.asdf.converter.Frame2DConverter;
+import edu.stsci.gwcs.asdf.converter.IdentityConverter;
+import edu.stsci.gwcs.asdf.converter.RemapAxesConverter;
+import edu.stsci.gwcs.asdf.converter.ScaleConverter;
+import edu.stsci.gwcs.asdf.converter.ShiftConverter;
 import edu.stsci.gwcs.coordinate.Frame;
 import edu.stsci.gwcs.transform.Transform;
 import lombok.NonNull;
@@ -29,12 +35,22 @@ public class GwcsAsdfSupport {
 
     private void registerConverters() {
         registerFrameConverters();
+        registerTransformConverters();
     }
 
     private void registerFrameConverters() {
         registry.register(new Frame2DConverter(this));
         registry.register(new CelestialFrameConverter(this));
         registry.register(new CompositeFrameConverter(this));
+    }
+
+    private void registerTransformConverters() {
+        registry.register(new ShiftConverter(this));
+        registry.register(new ScaleConverter(this));
+        registry.register(new IdentityConverter(this));
+        registry.register(new ConstantConverter(this));
+        registry.register(new RemapAxesConverter(this));
+        registry.register(new AffineConverter(this));
     }
 
     public Wcs deserializeWcs(@NonNull final AsdfNode node) {

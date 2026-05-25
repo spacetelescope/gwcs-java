@@ -1,6 +1,6 @@
 package edu.stsci.gwcs;
 
-import edu.stsci.gwcs.coordinate.Frame2D;
+import edu.stsci.gwcs.frame.Frame2D;
 import edu.stsci.gwcs.transform.Identity;
 import org.junit.jupiter.api.Test;
 

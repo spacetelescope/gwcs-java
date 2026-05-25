@@ -1,6 +1,6 @@
 package edu.stsci.gwcs;
 
-import edu.stsci.gwcs.coordinate.Frame;
+import edu.stsci.gwcs.frame.Frame;
 import edu.stsci.gwcs.transform.Transform;
 import lombok.NonNull;
 

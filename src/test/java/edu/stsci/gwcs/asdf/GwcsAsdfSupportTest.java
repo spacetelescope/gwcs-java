@@ -1,6 +1,6 @@
 package edu.stsci.gwcs.asdf;
 
-import edu.stsci.gwcs.coordinate.Frame;
+import edu.stsci.gwcs.frame.Frame;
 import org.asdfformat.asdf.node.AsdfNode;
 import org.junit.jupiter.api.Test;
 

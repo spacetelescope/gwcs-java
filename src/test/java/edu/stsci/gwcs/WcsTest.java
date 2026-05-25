@@ -1,9 +1,9 @@
 package edu.stsci.gwcs;
 
-import edu.stsci.gwcs.coordinate.CelestialFrame;
-import edu.stsci.gwcs.coordinate.CompositeFrame;
-import edu.stsci.gwcs.coordinate.Frame;
-import edu.stsci.gwcs.coordinate.Frame2D;
+import edu.stsci.gwcs.frame.CelestialFrame;
+import edu.stsci.gwcs.frame.CompositeFrame;
+import edu.stsci.gwcs.frame.Frame;
+import edu.stsci.gwcs.frame.Frame2D;
 import edu.stsci.gwcs.transform.*;
 import edu.stsci.gwcs.transform.compound.Concatenate;
 import edu.stsci.gwcs.transform.functional.Affine;

@@ -7,9 +7,11 @@ import edu.stsci.gwcs.asdf.converter.CompositeFrameConverter;
 import edu.stsci.gwcs.asdf.converter.ConstantConverter;
 import edu.stsci.gwcs.asdf.converter.Frame2DConverter;
 import edu.stsci.gwcs.asdf.converter.IdentityConverter;
+import edu.stsci.gwcs.asdf.converter.PolynomialConverter;
 import edu.stsci.gwcs.asdf.converter.RemapAxesConverter;
 import edu.stsci.gwcs.asdf.converter.ScaleConverter;
 import edu.stsci.gwcs.asdf.converter.ShiftConverter;
+import edu.stsci.gwcs.asdf.converter.Tabular1DConverter;
 import edu.stsci.gwcs.coordinate.Frame;
 import edu.stsci.gwcs.transform.Transform;
 import lombok.NonNull;
@@ -51,6 +53,8 @@ public class GwcsAsdfSupport {
         registry.register(new ConstantConverter(this));
         registry.register(new RemapAxesConverter(this));
         registry.register(new AffineConverter(this));
+        registry.register(new PolynomialConverter(this));
+        registry.register(new Tabular1DConverter(this));
     }
 
     public Wcs deserializeWcs(@NonNull final AsdfNode node) {

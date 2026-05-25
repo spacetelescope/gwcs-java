@@ -1,21 +1,22 @@
 package edu.stsci.gwcs.asdf;
 
+import edu.stsci.gwcs.coordinate.Frame;
 import org.asdfformat.asdf.node.AsdfNode;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class WcsDeserializerTest {
+class GwcsAsdfSupportTest {
     @Test
     void unknownTagThrowsIllegalArgumentException() {
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/spectral_frame-1.0.0");
 
-        final WcsDeserializer deserializer = new WcsDeserializer();
+        final GwcsAsdfSupport support = new GwcsAsdfSupport();
         final IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> deserializer.deserialize(node)
+                () -> support.deserializeWcs(node)
         );
         assertTrue(exception.getMessage().contains("tag:stsci.edu:gwcs/spectral_frame-1.0.0"));
     }
@@ -56,8 +57,31 @@ class WcsDeserializerTest {
     }
 
     @Test
-    void deserializerExposesRegistryForCustomRegistration() {
-        final WcsDeserializer deserializer = new WcsDeserializer();
-        assertNotNull(deserializer.getRegistry());
+    void deserializeThrowsClassCastExceptionOnTypeMismatch() {
+        final TagRegistry registry = new TagRegistry();
+        registry.register("tag:stsci.edu:gwcs/frame2d-1.0.0", node -> "not a frame");
+
+        final AsdfNode node = mock(AsdfNode.class);
+        when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/frame2d-1.0.0");
+
+        final ClassCastException exception = assertThrows(
+                ClassCastException.class,
+                () -> registry.deserialize(node, Frame.class)
+        );
+        assertTrue(exception.getMessage().contains("tag:stsci.edu:gwcs/frame2d-1.0.0"));
+        assertTrue(exception.getMessage().contains(Frame.class.getName()));
+    }
+
+    @Test
+    void unknownTagThrowsIllegalArgumentExceptionFromDeserializeTransform() {
+        final AsdfNode node = mock(AsdfNode.class);
+        when(node.getTag()).thenReturn("tag:stsci.edu:asdf/transform/unknown-1.0.0");
+
+        final GwcsAsdfSupport support = new GwcsAsdfSupport();
+        final IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> support.deserializeTransform(node)
+        );
+        assertTrue(exception.getMessage().contains("tag:stsci.edu:asdf/transform/unknown-1.0.0"));
     }
 }

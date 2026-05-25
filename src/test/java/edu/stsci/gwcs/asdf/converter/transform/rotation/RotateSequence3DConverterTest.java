@@ -43,6 +43,7 @@ class RotateSequence3DConverterTest {
     void deserializeIdentityRotation() {
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:asdf/transform/rotate_sequence_3d-1.1.0");
+        when(node.getString("rotation_type")).thenReturn("cartesian");
         when(node.getList("angles", Double.class)).thenReturn(List.of(0.0, 0.0, 0.0));
         when(node.getString("axes_order")).thenReturn("xyz");
         when(node.getOptional("name")).thenReturn(Optional.empty());
@@ -56,5 +57,15 @@ class RotateSequence3DConverterTest {
         assertEquals(1.0, result[0], 1e-12);
         assertEquals(2.0, result[1], 1e-12);
         assertEquals(3.0, result[2], 1e-12);
+    }
+
+    @Test
+    void sphericalRotationTypeThrows() {
+        final AsdfNode node = mock(AsdfNode.class);
+        when(node.getTag()).thenReturn("tag:stsci.edu:asdf/transform/rotate_sequence_3d-1.1.0");
+        when(node.getString("rotation_type")).thenReturn("spherical");
+
+        final GwcsAsdfSupport support = new GwcsAsdfSupport();
+        assertThrows(IllegalArgumentException.class, () -> support.deserializeTransform(node));
     }
 }

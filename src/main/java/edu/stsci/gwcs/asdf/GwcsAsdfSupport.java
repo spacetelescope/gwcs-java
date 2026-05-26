@@ -18,6 +18,12 @@ import edu.stsci.gwcs.asdf.converter.transform.projection.ProjectionConverter;
 import edu.stsci.gwcs.asdf.converter.transform.rotation.Rotate3DConverter;
 import edu.stsci.gwcs.asdf.converter.transform.rotation.RotateSequence3DConverter;
 import edu.stsci.gwcs.asdf.converter.transform.rotation.Rotation2DConverter;
+import edu.stsci.gwcs.asdf.converter.transform.selector.LabelMapperDictConverter;
+import edu.stsci.gwcs.asdf.converter.transform.selector.RegionsSelectorConverter;
+import edu.stsci.gwcs.asdf.converter.transform.spectroscopy.GratingEquationConverter;
+import edu.stsci.gwcs.asdf.converter.transform.spectroscopy.SellmeierGlassConverter;
+import edu.stsci.gwcs.asdf.converter.transform.spectroscopy.SellmeierZemaxConverter;
+import edu.stsci.gwcs.asdf.converter.transform.spectroscopy.Snell3DConverter;
 import edu.stsci.gwcs.asdf.converter.transform.tabular.Tabular1DConverter;
 import edu.stsci.gwcs.frame.Frame;
 import edu.stsci.gwcs.transform.Transform;
@@ -69,6 +75,12 @@ public class GwcsAsdfSupport {
         registry.register(new DirectionCosinesConverter(this));
         registry.register(new ProjectionConverter(this));
         registry.register(new FitsWcsImagingConverter(this));
+        registry.register(new GratingEquationConverter(this));
+        registry.register(new SellmeierGlassConverter(this));
+        registry.register(new SellmeierZemaxConverter(this));
+        registry.register(new Snell3DConverter(this));
+        registry.register(new LabelMapperDictConverter(this));
+        registry.register(new RegionsSelectorConverter(this));
     }
 
     public Wcs deserializeWcs(@NonNull final AsdfNode node) {

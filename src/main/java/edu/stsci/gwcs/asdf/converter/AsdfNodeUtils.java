@@ -25,6 +25,15 @@ public class AsdfNodeUtils {
         return result;
     }
 
+    public static double[] readDoubleArray(final AsdfNode node, final String key) {
+        final List<Double> list = node.getList(key, Double.class);
+        final double[] result = new double[list.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = list.get(i);
+        }
+        return result;
+    }
+
     public static Transform wrapWithNamedTransform(final Transform transform, final AsdfNode node) {
         final Optional<AsdfNode> nameNode = node.getOptional("name");
         final Optional<AsdfNode> inputsNode = node.getOptional("inputs");

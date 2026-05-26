@@ -22,7 +22,6 @@ public class SellmeierGlassConverter extends ConverterBase {
     public Transform fromAsdfNode(final AsdfNode node) {
         final double[] bCoefficients = AsdfNodeUtils.readDoubleArray(node, "B_coef");
         final double[] cCoefficients = AsdfNodeUtils.readDoubleArray(node, "C_coef");
-        final Transform transform = new SellmeierGlass(bCoefficients, cCoefficients);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new SellmeierGlass(bCoefficients, cCoefficients);
     }
 }

@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.rotation;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.rotation.Rotation2D;
@@ -22,7 +21,6 @@ public class Rotation2DConverter extends ConverterBase {
     @Override
     public Transform fromAsdfNode(final AsdfNode node) {
         final double angle = node.getDouble("angle");
-        final Transform transform = new Rotation2D(angle);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Rotation2D(angle);
     }
 }

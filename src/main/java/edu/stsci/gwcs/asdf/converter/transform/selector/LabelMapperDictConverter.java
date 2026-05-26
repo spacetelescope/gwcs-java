@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.selector;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.selector.LabelMapperDict;
@@ -41,6 +40,6 @@ public class LabelMapperDictConverter extends ConverterBase {
                 .orElse(Double.NaN);
 
         final Transform transform = new LabelMapperDict(labelMap, atol, noLabel);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return transform;
     }
 }

@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.geometry;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.geometry.FromDirectionCosines;
@@ -32,6 +31,6 @@ public class DirectionCosinesConverter extends ConverterBase {
         } else {
             throw new IllegalArgumentException("Unknown direction_cosines transform_type: " + transformType);
         }
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return transform;
     }
 }

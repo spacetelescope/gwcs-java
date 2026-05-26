@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.spectroscopy;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.spectroscopy.Snell3D;
@@ -20,7 +19,6 @@ public class Snell3DConverter extends ConverterBase {
 
     @Override
     public Transform fromAsdfNode(final AsdfNode node) {
-        final Transform transform = new Snell3D();
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Snell3D();
     }
 }

@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.projection;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.projection.Projection;
@@ -108,7 +107,7 @@ public class ProjectionConverter extends ConverterBase {
         final Direction direction = readDirection(node);
 
         final Projection projection = createProjection(projectionName, node, direction);
-        return AsdfNodeUtils.wrapWithNamedTransform(projection, node);
+        return projection;
     }
 
     private static Projection createProjection(final String name, final AsdfNode node, final Direction direction) {

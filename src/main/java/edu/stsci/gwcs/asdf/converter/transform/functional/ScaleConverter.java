@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.functional;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.functional.Scale;
@@ -22,7 +21,6 @@ public class ScaleConverter extends ConverterBase {
     @Override
     public Transform fromAsdfNode(final AsdfNode node) {
         final double factor = node.getDouble("factor");
-        final Transform transform = new Scale(factor);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Scale(factor);
     }
 }

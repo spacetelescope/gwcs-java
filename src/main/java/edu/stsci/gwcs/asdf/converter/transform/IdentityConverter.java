@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Identity;
 import edu.stsci.gwcs.transform.Transform;
@@ -24,7 +23,6 @@ public class IdentityConverter extends ConverterBase {
         final int nDims = node.getOptional("n_dims")
                 .map(AsdfNode::asInt)
                 .orElse(1);
-        final Transform transform = new Identity(nDims);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Identity(nDims);
     }
 }

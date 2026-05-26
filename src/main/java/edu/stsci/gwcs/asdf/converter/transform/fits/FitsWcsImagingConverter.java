@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.fits;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.DelegatingTransform;
 import edu.stsci.gwcs.transform.Transform;
@@ -44,8 +43,7 @@ public class FitsWcsImagingConverter extends ConverterBase {
         final AsdfNode projectionNode = node.get("projection");
         final Projection projection = unwrapProjection(support().deserializeTransform(projectionNode));
 
-        return AsdfNodeUtils.wrapWithNamedTransform(
-                new FitsWcsImaging(projection, crpix, crval, cdelt, pc), node);
+        return new FitsWcsImaging(projection, crpix, crval, cdelt, pc);
     }
 
     private static Projection unwrapProjection(Transform transform) {

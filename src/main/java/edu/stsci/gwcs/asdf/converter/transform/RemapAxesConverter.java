@@ -33,7 +33,6 @@ public class RemapAxesConverter extends ConverterBase {
                 .map(AsdfNode::asInt)
                 .orElse(maxIndex + 1);
 
-        final Transform transform = new RemapAxes(mapping, nInputs);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new RemapAxes(mapping, nInputs);
     }
 }

@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.rotation;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.rotation.EulerAngleRotation;
@@ -46,6 +45,6 @@ public class Rotate3DConverter extends ConverterBase {
                     direction
             );
         }
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return transform;
     }
 }

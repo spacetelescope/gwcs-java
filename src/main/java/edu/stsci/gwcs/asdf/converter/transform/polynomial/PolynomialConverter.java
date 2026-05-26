@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.polynomial;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.polynomial.Polynomial1D;
@@ -39,8 +38,7 @@ public class PolynomialConverter extends ConverterBase {
         final double[] domain = readOptionalDoublePair(node, "domain");
         final double[] window = readOptionalDoublePair(node, "window");
 
-        final Transform transform = new Polynomial1D(coefficients, domain, window);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Polynomial1D(coefficients, domain, window);
     }
 
     private Transform deserializePolynomial2D(final NdArray<?> coefficientsNd, final AsdfNode node) {
@@ -52,8 +50,7 @@ public class PolynomialConverter extends ConverterBase {
         final double[] xWindow = readOptionalDomainElement(node, "window", 0);
         final double[] yWindow = readOptionalDomainElement(node, "window", 1);
 
-        final Transform transform = new Polynomial2D(coefficients, xDomain, yDomain, xWindow, yWindow);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Polynomial2D(coefficients, xDomain, yDomain, xWindow, yWindow);
     }
 
     private static double[] readOptionalDoublePair(final AsdfNode node, final String key) {

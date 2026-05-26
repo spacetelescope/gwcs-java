@@ -2,9 +2,13 @@ package edu.stsci.gwcs.transform;
 
 import lombok.NonNull;
 
-public class ExplicitInverseWrapper implements Transform {
+public class ExplicitInverseWrapper implements DelegatingTransform {
     private final Transform delegate;
     private final Transform inverse;
+
+    public Transform getDelegate() {
+        return delegate;
+    }
 
     public ExplicitInverseWrapper(@NonNull final Transform delegate, @NonNull final Transform inverse) {
         if (delegate.getOutputCount() != inverse.getInputCount()

@@ -2,10 +2,14 @@ package edu.stsci.gwcs.transform;
 
 import lombok.NonNull;
 
-public class BoundingBoxWrapper implements Transform {
+public class BoundingBoxWrapper implements DelegatingTransform {
     private final Transform delegate;
     private final double[][] intervals;
     private final double fillValue;
+
+    public Transform getDelegate() {
+        return delegate;
+    }
 
     public BoundingBoxWrapper(@NonNull final Transform delegate, @NonNull final double[][] intervals, final double fillValue) {
         if (intervals.length != delegate.getInputCount()) {

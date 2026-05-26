@@ -2,7 +2,7 @@ package edu.stsci.gwcs.transform;
 
 import lombok.NonNull;
 
-public class NamedTransform implements Transform {
+public class NamedTransform implements DelegatingTransform {
     private final Transform delegate;
     private final String name;
     private final String[] inputNames;

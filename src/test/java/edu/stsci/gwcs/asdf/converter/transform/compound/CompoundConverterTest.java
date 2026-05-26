@@ -548,7 +548,7 @@ class CompoundConverterTest {
     }
 
     @Test
-    void deserializeBoundingBoxIntervalCountMismatchThrows() {
+    void deserializeBoundingBoxMoreIntervalsThanInputsThrows() {
         final AsdfNode intervalX = mockInterval(-0.5, 4087.5);
 
         final AsdfNode intervalsNode = mock(AsdfNode.class);
@@ -572,5 +572,79 @@ class CompoundConverterTest {
         when(node.getOptional("bounding_box")).thenReturn(Optional.of(bboxNode));
 
         assertThrows(IllegalArgumentException.class, () -> support.deserializeTransform(node));
+    }
+
+    @Test
+    void deserializeBoundingBoxFewerIntervalsThanInputsThrows() {
+        final AsdfNode intervalX = mockInterval(-0.5, 4087.5);
+
+        final AsdfNode intervalsNode = mock(AsdfNode.class);
+        @SuppressWarnings("unchecked")
+        final Iterator<AsdfNode> iterator = mock(Iterator.class);
+        when(iterator.hasNext()).thenReturn(true, false);
+        when(iterator.next()).thenReturn(intervalX);
+        when(intervalsNode.iterator()).thenReturn(iterator);
+
+        final AsdfNode bboxNode = mock(AsdfNode.class);
+        when(bboxNode.get("intervals")).thenReturn(intervalsNode);
+
+        final AsdfNode concatNode = mockCompoundNode(
+                "tag:stsci.edu:asdf/transform/concatenate-1.3.0",
+                mockShiftNode(1.0),
+                mockShiftNode(2.0));
+        when(concatNode.getOptional("bounding_box")).thenReturn(Optional.of(bboxNode));
+
+        assertThrows(IllegalArgumentException.class, () -> support.deserializeTransform(concatNode));
+    }
+
+    @Test
+    void deserializeLabeledBoundingBoxLabelCountMismatchThrows() {
+        final AsdfNode intervalX = mockInterval(-0.5, 4087.5);
+
+        final AsdfNode intervalsNode = mock(AsdfNode.class);
+        when(intervalsNode.get("x")).thenReturn(intervalX);
+
+        final AsdfNode bboxNode = mock(AsdfNode.class);
+        when(bboxNode.get("intervals")).thenReturn(intervalsNode);
+
+        final AsdfNode inputsLabelNode = mock(AsdfNode.class);
+        when(inputsLabelNode.asList(String.class)).thenReturn(List.of("x", "y", "z"));
+
+        final AsdfNode concatNode = mockCompoundNode(
+                "tag:stsci.edu:asdf/transform/concatenate-1.3.0",
+                mockShiftNode(1.0),
+                mockShiftNode(2.0));
+        when(concatNode.getOptional("inputs")).thenReturn(Optional.of(inputsLabelNode));
+        when(concatNode.getOptional("bounding_box")).thenReturn(Optional.of(bboxNode));
+
+        final IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class, () -> support.deserializeTransform(concatNode));
+        assertTrue(ex.getMessage().contains("does not match transform input count"));
+    }
+
+    @Test
+    void deserializeLabeledBoundingBoxMissingIntervalKeyThrows() {
+        final AsdfNode intervalX = mockInterval(-0.5, 4087.5);
+
+        final AsdfNode intervalsNode = mock(AsdfNode.class);
+        when(intervalsNode.get("x")).thenReturn(intervalX);
+        when(intervalsNode.get("y")).thenReturn(null);
+
+        final AsdfNode bboxNode = mock(AsdfNode.class);
+        when(bboxNode.get("intervals")).thenReturn(intervalsNode);
+
+        final AsdfNode inputsLabelNode = mock(AsdfNode.class);
+        when(inputsLabelNode.asList(String.class)).thenReturn(List.of("x", "y"));
+
+        final AsdfNode concatNode = mockCompoundNode(
+                "tag:stsci.edu:asdf/transform/concatenate-1.3.0",
+                mockShiftNode(1.0),
+                mockShiftNode(2.0));
+        when(concatNode.getOptional("inputs")).thenReturn(Optional.of(inputsLabelNode));
+        when(concatNode.getOptional("bounding_box")).thenReturn(Optional.of(bboxNode));
+
+        final IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class, () -> support.deserializeTransform(concatNode));
+        assertTrue(ex.getMessage().contains("missing key 'y'"));
     }
 }

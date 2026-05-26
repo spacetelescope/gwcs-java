@@ -1,12 +1,23 @@
 package edu.stsci.gwcs.asdf;
 
+import edu.stsci.gwcs.Step;
 import edu.stsci.gwcs.Wcs;
+import edu.stsci.gwcs.asdf.converter.StepConverter;
+import edu.stsci.gwcs.asdf.converter.WcsConverter;
 import edu.stsci.gwcs.asdf.converter.frame.CelestialFrameConverter;
 import edu.stsci.gwcs.asdf.converter.frame.CompositeFrameConverter;
 import edu.stsci.gwcs.asdf.converter.frame.Frame2DConverter;
 import edu.stsci.gwcs.asdf.converter.transform.ConstantConverter;
 import edu.stsci.gwcs.asdf.converter.transform.IdentityConverter;
 import edu.stsci.gwcs.asdf.converter.transform.RemapAxesConverter;
+import edu.stsci.gwcs.asdf.converter.transform.compound.AddConverter;
+import edu.stsci.gwcs.asdf.converter.transform.compound.ComposeConverter;
+import edu.stsci.gwcs.asdf.converter.transform.compound.ConcatenateConverter;
+import edu.stsci.gwcs.asdf.converter.transform.compound.DivideConverter;
+import edu.stsci.gwcs.asdf.converter.transform.compound.FixInputsConverter;
+import edu.stsci.gwcs.asdf.converter.transform.compound.MultiplyConverter;
+import edu.stsci.gwcs.asdf.converter.transform.compound.PowerConverter;
+import edu.stsci.gwcs.asdf.converter.transform.compound.SubtractConverter;
 import edu.stsci.gwcs.asdf.converter.transform.fits.FitsWcsImagingConverter;
 import edu.stsci.gwcs.asdf.converter.transform.functional.AffineConverter;
 import edu.stsci.gwcs.asdf.converter.transform.functional.ScaleConverter;
@@ -23,14 +34,6 @@ import edu.stsci.gwcs.asdf.converter.transform.selector.RegionsSelectorConverter
 import edu.stsci.gwcs.asdf.converter.transform.spectroscopy.GratingEquationConverter;
 import edu.stsci.gwcs.asdf.converter.transform.spectroscopy.SellmeierGlassConverter;
 import edu.stsci.gwcs.asdf.converter.transform.spectroscopy.SellmeierZemaxConverter;
-import edu.stsci.gwcs.asdf.converter.transform.compound.AddConverter;
-import edu.stsci.gwcs.asdf.converter.transform.compound.ComposeConverter;
-import edu.stsci.gwcs.asdf.converter.transform.compound.ConcatenateConverter;
-import edu.stsci.gwcs.asdf.converter.transform.compound.DivideConverter;
-import edu.stsci.gwcs.asdf.converter.transform.compound.FixInputsConverter;
-import edu.stsci.gwcs.asdf.converter.transform.compound.MultiplyConverter;
-import edu.stsci.gwcs.asdf.converter.transform.compound.PowerConverter;
-import edu.stsci.gwcs.asdf.converter.transform.compound.SubtractConverter;
 import edu.stsci.gwcs.asdf.converter.transform.spectroscopy.Snell3DConverter;
 import edu.stsci.gwcs.asdf.converter.transform.tabular.Tabular1DConverter;
 import edu.stsci.gwcs.frame.Frame;
@@ -64,6 +67,8 @@ public class GwcsAsdfSupport {
     private void registerConverters() {
         registerFrameConverters();
         registerTransformConverters();
+        registry.register(new StepConverter(this));
+        registry.register(new WcsConverter(this));
     }
 
     private void registerFrameConverters() {
@@ -118,6 +123,10 @@ public class GwcsAsdfSupport {
 
     public Frame deserializeFrame(@NonNull final AsdfNode node) {
         return registry.deserialize(node, Frame.class);
+    }
+
+    public Step deserializeStep(@NonNull final AsdfNode node) {
+        return registry.deserialize(node, Step.class);
     }
 
     private Transform applyExplicitInverse(final Transform transform, final AsdfNode node) {

@@ -13,6 +13,7 @@ import edu.stsci.gwcs.asdf.converter.transform.functional.ShiftConverter;
 import edu.stsci.gwcs.asdf.converter.transform.geometry.DirectionCosinesConverter;
 import edu.stsci.gwcs.asdf.converter.transform.geometry.SphericalCartesianConverter;
 import edu.stsci.gwcs.asdf.converter.transform.polynomial.PolynomialConverter;
+import edu.stsci.gwcs.asdf.converter.transform.projection.ProjectionConverter;
 import edu.stsci.gwcs.asdf.converter.transform.rotation.Rotate3DConverter;
 import edu.stsci.gwcs.asdf.converter.transform.rotation.RotateSequence3DConverter;
 import edu.stsci.gwcs.asdf.converter.transform.rotation.Rotation2DConverter;
@@ -65,6 +66,7 @@ public class GwcsAsdfSupport {
         registry.register(new Rotation2DConverter(this));
         registry.register(new SphericalCartesianConverter(this));
         registry.register(new DirectionCosinesConverter(this));
+        registry.register(new ProjectionConverter(this));
     }
 
     public Wcs deserializeWcs(@NonNull final AsdfNode node) {

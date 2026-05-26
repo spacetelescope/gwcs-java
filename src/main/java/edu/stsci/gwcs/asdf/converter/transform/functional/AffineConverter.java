@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.functional;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.functional.Affine;
@@ -29,7 +28,6 @@ public class AffineConverter extends ConverterBase {
         final double[][] matrix = matrixNd.toArray(new double[n][n]);
         final double[] translation = translationNd.toArray(new double[n]);
 
-        final Transform transform = new Affine(matrix, translation);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Affine(matrix, translation);
     }
 }

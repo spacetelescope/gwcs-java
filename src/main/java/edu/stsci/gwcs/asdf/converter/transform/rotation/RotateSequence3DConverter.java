@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.rotation;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.rotation.RotateSequence3D;
@@ -32,7 +31,6 @@ public class RotateSequence3DConverter extends ConverterBase {
             angles[i] = anglesList.get(i);
         }
         final String axesOrder = node.getString("axes_order");
-        final Transform transform = new RotateSequence3D(angles, axesOrder);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new RotateSequence3D(angles, axesOrder);
     }
 }

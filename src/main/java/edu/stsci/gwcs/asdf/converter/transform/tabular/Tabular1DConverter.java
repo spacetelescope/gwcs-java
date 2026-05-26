@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.tabular;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.tabular.Tabular1D;
@@ -39,7 +38,6 @@ public class Tabular1DConverter extends ConverterBase {
         final Optional<AsdfNode> fillValueNode = node.getOptional("fill_value");
         final double fillValue = fillValueNode.map(AsdfNode::asDouble).orElse(Double.NaN);
 
-        final Transform transform = new Tabular1D(points, values, mode, fillValue, InterpolationMethod.LINEAR);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Tabular1D(points, values, mode, fillValue, InterpolationMethod.LINEAR);
     }
 }

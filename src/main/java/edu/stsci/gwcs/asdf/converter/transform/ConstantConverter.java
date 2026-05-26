@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Constant;
 import edu.stsci.gwcs.transform.Transform;
@@ -23,7 +22,6 @@ public class ConstantConverter extends ConverterBase {
     public Transform fromAsdfNode(final AsdfNode node) {
         final double value = node.getDouble("value");
         final int dimensions = node.getInt("dimensions");
-        final Transform transform = new Constant(dimensions, value);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return new Constant(dimensions, value);
     }
 }

@@ -28,10 +28,9 @@ public class SellmeierZemaxConverter extends ConverterBase {
         final double[] cCoefficients = AsdfNodeUtils.readDoubleArray(node, "C_coef");
         final double[] dCoefficients = AsdfNodeUtils.readDoubleArray(node, "D_coef");
         final double[] eCoefficients = AsdfNodeUtils.readDoubleArray(node, "E_coef");
-        final Transform transform = new SellmeierZemax(
+        return new SellmeierZemax(
                 temperature, refTemperature, refPressure, pressure,
                 bCoefficients, cCoefficients, dCoefficients, eCoefficients
         );
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
     }
 }

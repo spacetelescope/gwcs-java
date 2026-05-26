@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.spectroscopy;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.spectroscopy.AnglesFromGratingEquation3D;
@@ -33,6 +32,6 @@ public class GratingEquationConverter extends ConverterBase {
         } else {
             throw new IllegalArgumentException("Unknown grating_equation output: " + output);
         }
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return transform;
     }
 }

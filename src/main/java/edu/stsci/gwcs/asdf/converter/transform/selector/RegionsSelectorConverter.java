@@ -1,7 +1,6 @@
 package edu.stsci.gwcs.asdf.converter.transform.selector;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
-import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.selector.RegionsSelector;
@@ -40,6 +39,6 @@ public class RegionsSelectorConverter extends ConverterBase {
                 .orElse(Double.NaN);
 
         final Transform transform = new RegionsSelector(labelMapper, selector, undefinedTransformValue);
-        return AsdfNodeUtils.wrapWithNamedTransform(transform, node);
+        return transform;
     }
 }

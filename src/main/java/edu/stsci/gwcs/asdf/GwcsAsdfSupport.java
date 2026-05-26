@@ -10,7 +10,12 @@ import edu.stsci.gwcs.asdf.converter.transform.RemapAxesConverter;
 import edu.stsci.gwcs.asdf.converter.transform.functional.AffineConverter;
 import edu.stsci.gwcs.asdf.converter.transform.functional.ScaleConverter;
 import edu.stsci.gwcs.asdf.converter.transform.functional.ShiftConverter;
+import edu.stsci.gwcs.asdf.converter.transform.geometry.DirectionCosinesConverter;
+import edu.stsci.gwcs.asdf.converter.transform.geometry.SphericalCartesianConverter;
 import edu.stsci.gwcs.asdf.converter.transform.polynomial.PolynomialConverter;
+import edu.stsci.gwcs.asdf.converter.transform.rotation.Rotate3DConverter;
+import edu.stsci.gwcs.asdf.converter.transform.rotation.RotateSequence3DConverter;
+import edu.stsci.gwcs.asdf.converter.transform.rotation.Rotation2DConverter;
 import edu.stsci.gwcs.asdf.converter.transform.tabular.Tabular1DConverter;
 import edu.stsci.gwcs.frame.Frame;
 import edu.stsci.gwcs.transform.Transform;
@@ -55,6 +60,11 @@ public class GwcsAsdfSupport {
         registry.register(new AffineConverter(this));
         registry.register(new PolynomialConverter(this));
         registry.register(new Tabular1DConverter(this));
+        registry.register(new RotateSequence3DConverter(this));
+        registry.register(new Rotate3DConverter(this));
+        registry.register(new Rotation2DConverter(this));
+        registry.register(new SphericalCartesianConverter(this));
+        registry.register(new DirectionCosinesConverter(this));
     }
 
     public Wcs deserializeWcs(@NonNull final AsdfNode node) {

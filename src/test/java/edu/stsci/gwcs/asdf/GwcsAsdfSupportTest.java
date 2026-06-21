@@ -212,8 +212,11 @@ class GwcsAsdfSupportTest {
         when(wcsNode.getTag()).thenReturn("tag:stsci.edu:gwcs/wcs-1.4.0");
         when(wcsNode.getString("name")).thenReturn("test_wcs");
         when(wcsNode.get("steps")).thenReturn(stepsNode);
-        when(wcsNode.getOptional("pixel_shape")).thenReturn(Optional.of(mock(AsdfNode.class)));
-        when(wcsNode.getList("pixel_shape", Integer.class)).thenReturn(List.of(4088, 4088));
+        final AsdfNode pixelShapeNode = mock(AsdfNode.class);
+        when(pixelShapeNode.isNdArray()).thenReturn(false);
+        when(pixelShapeNode.asList(Integer.class)).thenReturn(List.of(4088, 4088));
+        when(wcsNode.getOptional("pixel_shape")).thenReturn(Optional.of(pixelShapeNode));
+        when(wcsNode.get("pixel_shape")).thenReturn(pixelShapeNode);
 
         final Wcs wcs = support.deserializeWcs(wcsNode);
 
@@ -270,7 +273,10 @@ class GwcsAsdfSupportTest {
         when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/frame2d-1.0.0");
         when(node.getString("name")).thenReturn(name);
         when(node.getList("axes_names", String.class)).thenReturn(List.of(axisNames));
-        when(node.getList("axes_order", Integer.class)).thenReturn(List.of(0, 1));
+        final AsdfNode axisOrderNode = mock(AsdfNode.class);
+        when(axisOrderNode.isNdArray()).thenReturn(false);
+        when(axisOrderNode.asList(Integer.class)).thenReturn(List.of(0, 1));
+        when(node.get("axes_order")).thenReturn(axisOrderNode);
         when(node.getList("axis_physical_types", String.class)).thenReturn(List.of("custom:x", "custom:y"));
         when(node.getList("unit", String.class)).thenReturn(List.of("pixel", "pixel"));
         return node;

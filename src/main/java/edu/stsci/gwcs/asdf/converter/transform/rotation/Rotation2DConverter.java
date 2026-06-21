@@ -11,7 +11,8 @@ import java.util.Set;
 public class Rotation2DConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:asdf/transform/rotate2d-1.3.0",
-            "tag:stsci.edu:asdf/transform/rotate2d-1.4.0"
+            "tag:stsci.edu:asdf/transform/rotate2d-1.4.0",
+            "tag:stsci.edu:asdf/transform/rotate2d-1.5.0"
     );
 
     public Rotation2DConverter(final GwcsAsdfSupport support) {

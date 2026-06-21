@@ -15,10 +15,14 @@ import static org.mockito.Mockito.*;
 class RotateSequence3DConverterTest {
     @Test
     void deserializeRotateSequence3D() {
+        final AsdfNode anglesNode = mock(AsdfNode.class);
+        when(anglesNode.isNdArray()).thenReturn(false);
+        when(anglesNode.asList(Double.class)).thenReturn(List.of(90.0, 0.0, 0.0));
+
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:asdf/transform/rotate_sequence_3d-1.1.0");
         when(node.getString("rotation_type")).thenReturn("cartesian");
-        when(node.getList("angles", Double.class)).thenReturn(List.of(90.0, 0.0, 0.0));
+        when(node.get("angles")).thenReturn(anglesNode);
         when(node.getString("axes_order")).thenReturn("zyx");
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());
@@ -41,10 +45,14 @@ class RotateSequence3DConverterTest {
 
     @Test
     void deserializeIdentityRotation() {
+        final AsdfNode anglesNode = mock(AsdfNode.class);
+        when(anglesNode.isNdArray()).thenReturn(false);
+        when(anglesNode.asList(Double.class)).thenReturn(List.of(0.0, 0.0, 0.0));
+
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:asdf/transform/rotate_sequence_3d-1.1.0");
         when(node.getString("rotation_type")).thenReturn("cartesian");
-        when(node.getList("angles", Double.class)).thenReturn(List.of(0.0, 0.0, 0.0));
+        when(node.get("angles")).thenReturn(anglesNode);
         when(node.getString("axes_order")).thenReturn("xyz");
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());

@@ -9,7 +9,8 @@ import java.util.Set;
 public class DivideConverter extends BinaryCompoundConverter {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:asdf/transform/divide-1.2.0",
-            "tag:stsci.edu:asdf/transform/divide-1.3.0"
+            "tag:stsci.edu:asdf/transform/divide-1.3.0",
+            "tag:stsci.edu:asdf/transform/divide-1.4.0"
     );
 
     public DivideConverter(final GwcsAsdfSupport support) {

@@ -13,11 +13,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class RemapAxesConverterTest {
+
+    private static AsdfNode mockIntListNode(final List<Integer> values) {
+        final AsdfNode child = mock(AsdfNode.class);
+        when(child.isNdArray()).thenReturn(false);
+        when(child.asList(Integer.class)).thenReturn(values);
+        return child;
+    }
+
     @Test
     void deserializeRemapAxesWithNInputs() {
+        final AsdfNode mappingNode = mockIntListNode(List.of(1, 0, 1));
+
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:asdf/transform/remap_axes-1.3.0");
-        when(node.getList("mapping", Integer.class)).thenReturn(List.of(1, 0, 1));
+        when(node.get("mapping")).thenReturn(mappingNode);
 
         final AsdfNode nInputsNode = mock(AsdfNode.class);
         when(nInputsNode.asInt()).thenReturn(3);
@@ -37,9 +47,11 @@ class RemapAxesConverterTest {
 
     @Test
     void deserializeRemapAxesWithoutNInputs() {
+        final AsdfNode mappingNode = mockIntListNode(List.of(1, 0));
+
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:asdf/transform/remap_axes-1.4.0");
-        when(node.getList("mapping", Integer.class)).thenReturn(List.of(1, 0));
+        when(node.get("mapping")).thenReturn(mappingNode);
         when(node.getOptional("n_inputs")).thenReturn(Optional.empty());
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());

@@ -31,7 +31,10 @@ class AsdfNodeUtilsTest {
     @Test
     void readIntArrayReturnsEmptyArrayForEmptyList() {
         final AsdfNode node = mock(AsdfNode.class);
-        when(node.getList("order", Integer.class)).thenReturn(Collections.emptyList());
+        final AsdfNode child = mock(AsdfNode.class);
+        when(node.get("order")).thenReturn(child);
+        when(child.isNdArray()).thenReturn(false);
+        when(child.asList(Integer.class)).thenReturn(Collections.emptyList());
 
         final int[] result = AsdfNodeUtils.readIntArray(node, "order");
         assertEquals(0, result.length);
@@ -40,7 +43,10 @@ class AsdfNodeUtilsTest {
     @Test
     void readIntArrayPreservesOrder() {
         final AsdfNode node = mock(AsdfNode.class);
-        when(node.getList("order", Integer.class)).thenReturn(List.of(2, 0, 1));
+        final AsdfNode child = mock(AsdfNode.class);
+        when(node.get("order")).thenReturn(child);
+        when(child.isNdArray()).thenReturn(false);
+        when(child.asList(Integer.class)).thenReturn(List.of(2, 0, 1));
 
         final int[] result = AsdfNodeUtils.readIntArray(node, "order");
         assertArrayEquals(new int[]{2, 0, 1}, result);

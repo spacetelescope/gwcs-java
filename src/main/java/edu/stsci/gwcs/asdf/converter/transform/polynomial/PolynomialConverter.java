@@ -13,7 +13,8 @@ import java.util.Set;
 
 public class PolynomialConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
-            "tag:stsci.edu:asdf/transform/polynomial-1.2.0"
+            "tag:stsci.edu:asdf/transform/polynomial-1.2.0",
+            "tag:stsci.edu:asdf/transform/polynomial-1.3.0"
     );
 
     public PolynomialConverter(final GwcsAsdfSupport support) {

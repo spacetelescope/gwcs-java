@@ -11,6 +11,7 @@ import java.util.Set;
 public class Frame2DConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:gwcs/frame2d-1.0.0",
+            "tag:stsci.edu:gwcs/frame2d-1.1.0",
             "tag:stsci.edu:gwcs/frame2d-1.2.0"
     );
 

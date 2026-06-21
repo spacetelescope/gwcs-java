@@ -342,7 +342,7 @@ class ProjectionConverterTest {
 
     @Test
     void deserializeMollweide() {
-        final AsdfNode node = projectionNode("mollweide-1.3.0", "pix2sky");
+        final AsdfNode node = projectionNode("molleweide-1.3.0", "pix2sky");
         assertInstanceOf(Mollweide.class, support.deserializeTransform(node));
     }
 

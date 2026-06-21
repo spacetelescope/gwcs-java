@@ -35,7 +35,7 @@
     <maven.compiler.release>11</maven.compiler.release>
     <revision>dev</revision>
     <lombok.version>1.18.36</lombok.version>
-    <asdf.version>0.1-alpha-8</asdf.version>
+    <asdf.version>0.1-beta-1</asdf.version>
     <ejml.version>0.44.0</ejml.version>
     <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
     <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>

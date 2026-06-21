@@ -14,7 +14,9 @@ import java.util.Set;
 
 public class Tabular1DConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
-            "tag:stsci.edu:asdf/transform/tabular-1.2.0"
+            "tag:stsci.edu:asdf/transform/tabular-1.2.0",
+            "tag:stsci.edu:asdf/transform/tabular-1.3.0",
+            "tag:stsci.edu:asdf/transform/tabular-1.4.0"
     );
 
     public Tabular1DConverter(final GwcsAsdfSupport support) {

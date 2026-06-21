@@ -9,7 +9,8 @@ import java.util.Set;
 public class SubtractConverter extends BinaryCompoundConverter {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:asdf/transform/subtract-1.2.0",
-            "tag:stsci.edu:asdf/transform/subtract-1.3.0"
+            "tag:stsci.edu:asdf/transform/subtract-1.3.0",
+            "tag:stsci.edu:asdf/transform/subtract-1.4.0"
     );
 
     public SubtractConverter(final GwcsAsdfSupport support) {

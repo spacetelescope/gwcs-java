@@ -12,7 +12,8 @@ import java.util.Set;
 public class AffineConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:asdf/transform/affine-1.3.0",
-            "tag:stsci.edu:asdf/transform/affine-1.4.0"
+            "tag:stsci.edu:asdf/transform/affine-1.4.0",
+            "tag:stsci.edu:asdf/transform/affine-1.5.0"
     );
 
     public AffineConverter(final GwcsAsdfSupport support) {

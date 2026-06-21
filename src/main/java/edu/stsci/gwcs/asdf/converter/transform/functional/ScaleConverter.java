@@ -11,7 +11,8 @@ import java.util.Set;
 public class ScaleConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:asdf/transform/scale-1.2.0",
-            "tag:stsci.edu:asdf/transform/scale-1.3.0"
+            "tag:stsci.edu:asdf/transform/scale-1.3.0",
+            "tag:stsci.edu:asdf/transform/scale-1.4.0"
     );
 
     public ScaleConverter(final GwcsAsdfSupport support) {

@@ -13,12 +13,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class SellmeierGlassConverterTest {
+
+    private static AsdfNode mockDoubleListNode(final List<Double> values) {
+        final AsdfNode child = mock(AsdfNode.class);
+        when(child.isNdArray()).thenReturn(false);
+        when(child.asList(Double.class)).thenReturn(values);
+        return child;
+    }
+
     @Test
     void deserializeSellmeierGlass() {
+        final AsdfNode bCoefNode = mockDoubleListNode(List.of(0.6961663, 0.4079426, 0.8974794));
+        final AsdfNode cCoefNode = mockDoubleListNode(List.of(0.0046914826, 0.013512063, 97.934003));
+
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/sellmeier_glass-1.0.0");
-        when(node.getList("B_coef", Double.class)).thenReturn(List.of(0.6961663, 0.4079426, 0.8974794));
-        when(node.getList("C_coef", Double.class)).thenReturn(List.of(0.0046914826, 0.013512063, 97.934003));
+        when(node.get("B_coef")).thenReturn(bCoefNode);
+        when(node.get("C_coef")).thenReturn(cCoefNode);
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());
         when(node.getOptional("outputs")).thenReturn(Optional.empty());
@@ -33,10 +44,13 @@ class SellmeierGlassConverterTest {
 
     @Test
     void sellmeierGlassEvaluatesCorrectly() {
+        final AsdfNode bCoefNode = mockDoubleListNode(List.of(0.6961663, 0.4079426, 0.8974794));
+        final AsdfNode cCoefNode = mockDoubleListNode(List.of(0.0046914826, 0.013512063, 97.934003));
+
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/sellmeier_glass-1.0.0");
-        when(node.getList("B_coef", Double.class)).thenReturn(List.of(0.6961663, 0.4079426, 0.8974794));
-        when(node.getList("C_coef", Double.class)).thenReturn(List.of(0.0046914826, 0.013512063, 97.934003));
+        when(node.get("B_coef")).thenReturn(bCoefNode);
+        when(node.get("C_coef")).thenReturn(cCoefNode);
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());
         when(node.getOptional("outputs")).thenReturn(Optional.empty());

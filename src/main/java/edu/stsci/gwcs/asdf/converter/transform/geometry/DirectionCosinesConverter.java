@@ -12,6 +12,8 @@ import java.util.Set;
 public class DirectionCosinesConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:gwcs/direction_cosines-1.0.0",
+            "tag:stsci.edu:gwcs/direction_cosines-1.1.0",
+            "tag:stsci.edu:gwcs/direction_cosines-1.2.0",
             "tag:stsci.edu:gwcs/direction_cosines-1.3.0"
     );
 

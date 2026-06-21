@@ -11,7 +11,10 @@ import java.util.Set;
 
 public class GratingEquationConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
-            "tag:stsci.edu:gwcs/grating_equation-1.0.0"
+            "tag:stsci.edu:gwcs/grating_equation-1.0.0",
+            "tag:stsci.edu:gwcs/grating_equation-1.1.0",
+            "tag:stsci.edu:gwcs/grating_equation-1.2.0",
+            "tag:stsci.edu:gwcs/grating_equation-1.3.0"
     );
 
     public GratingEquationConverter(final GwcsAsdfSupport support) {
@@ -21,7 +24,7 @@ public class GratingEquationConverter extends ConverterBase {
     @Override
     public Transform fromAsdfNode(final AsdfNode node) {
         final double grooveDensity = node.getDouble("groove_density");
-        final int order = node.getInt("order");
+        final int order = (int) node.getDouble("order");
         final String output = node.getString("output");
 
         final Transform transform;

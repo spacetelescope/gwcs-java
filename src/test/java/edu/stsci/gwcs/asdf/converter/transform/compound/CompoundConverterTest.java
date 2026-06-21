@@ -194,8 +194,14 @@ class CompoundConverterTest {
         when(identityNode.getOptional("bounding_box")).thenReturn(Optional.empty());
 
         final AsdfNode mappingNode = mock(AsdfNode.class);
-        when(mappingNode.getList("keys", Integer.class)).thenReturn(List.of(1));
-        when(mappingNode.getList("values", Double.class)).thenReturn(List.of(99.0));
+        final AsdfNode keysNode = mock(AsdfNode.class);
+        when(keysNode.isNdArray()).thenReturn(false);
+        when(keysNode.asList(Integer.class)).thenReturn(List.of(1));
+        when(mappingNode.get("keys")).thenReturn(keysNode);
+        final AsdfNode valuesNode = mock(AsdfNode.class);
+        when(valuesNode.isNdArray()).thenReturn(false);
+        when(valuesNode.asList(Double.class)).thenReturn(List.of(99.0));
+        when(mappingNode.get("values")).thenReturn(valuesNode);
 
         final AsdfNode forwardNode = mock(AsdfNode.class);
         when(forwardNode.get(0L)).thenReturn(identityNode);
@@ -232,8 +238,14 @@ class CompoundConverterTest {
         when(identityNode.getOptional("bounding_box")).thenReturn(Optional.empty());
 
         final AsdfNode mappingNode = mock(AsdfNode.class);
-        when(mappingNode.getList("keys", Integer.class)).thenReturn(List.of(0, 2));
-        when(mappingNode.getList("values", Double.class)).thenReturn(List.of(5.0, 15.0));
+        final AsdfNode keysNode = mock(AsdfNode.class);
+        when(keysNode.isNdArray()).thenReturn(false);
+        when(keysNode.asList(Integer.class)).thenReturn(List.of(0, 2));
+        when(mappingNode.get("keys")).thenReturn(keysNode);
+        final AsdfNode valuesNode = mock(AsdfNode.class);
+        when(valuesNode.isNdArray()).thenReturn(false);
+        when(valuesNode.asList(Double.class)).thenReturn(List.of(5.0, 15.0));
+        when(mappingNode.get("values")).thenReturn(valuesNode);
 
         final AsdfNode forwardNode = mock(AsdfNode.class);
         when(forwardNode.get(0L)).thenReturn(identityNode);
@@ -528,8 +540,14 @@ class CompoundConverterTest {
         when(identityNode.getOptional("bounding_box")).thenReturn(Optional.empty());
 
         final AsdfNode mappingNode = mock(AsdfNode.class);
-        when(mappingNode.getList("keys", Integer.class)).thenReturn(List.of(0, 1));
-        when(mappingNode.getList("values", Double.class)).thenReturn(List.of(99.0));
+        final AsdfNode keysNode = mock(AsdfNode.class);
+        when(keysNode.isNdArray()).thenReturn(false);
+        when(keysNode.asList(Integer.class)).thenReturn(List.of(0, 1));
+        when(mappingNode.get("keys")).thenReturn(keysNode);
+        final AsdfNode valuesNode = mock(AsdfNode.class);
+        when(valuesNode.isNdArray()).thenReturn(false);
+        when(valuesNode.asList(Double.class)).thenReturn(List.of(99.0));
+        when(mappingNode.get("values")).thenReturn(valuesNode);
 
         final AsdfNode forwardNode = mock(AsdfNode.class);
         when(forwardNode.get(0L)).thenReturn(identityNode);

@@ -62,7 +62,10 @@ class Frame2DConverterTest {
         when(node.getTag()).thenReturn(tag);
         when(node.getString("name")).thenReturn(name);
         when(node.getList("axes_names", String.class)).thenReturn(axisNames);
-        when(node.getList("axes_order", Integer.class)).thenReturn(axisOrder);
+        final AsdfNode axisOrderNode = mock(AsdfNode.class);
+        when(axisOrderNode.isNdArray()).thenReturn(false);
+        when(axisOrderNode.asList(Integer.class)).thenReturn(axisOrder);
+        when(node.get("axes_order")).thenReturn(axisOrderNode);
         when(node.getList("axis_physical_types", String.class)).thenReturn(axisPhysicalTypes);
         when(node.getList("unit", String.class)).thenReturn(units);
         return node;

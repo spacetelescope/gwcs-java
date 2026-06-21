@@ -27,8 +27,24 @@ jobs:
           distribution: corretto
           cache: maven
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install reference file generator requirements
+        run: |
+          pip install -r test-requirements.txt
+
+      - name: Locate Python
+        id: locate-python
+        run:
+          echo "python-path=`which python`" >> "$GITHUB_OUTPUT"
+
       - name: Execute tests
         run: mvn clean verify
+        env:
+          GWCS_JAVA_TESTS_PYTHON_PATH: ${{ steps.locate-python.outputs.python-path }}
 
       - name: Add code coverage PR comment
         uses: madrapps/jacoco-report@v1.7.2

@@ -18,7 +18,7 @@ class GratingEquationConverterTest {
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/grating_equation-1.0.0");
         when(node.getDouble("groove_density")).thenReturn(100.0);
-        when(node.getInt("order")).thenReturn(1);
+        when(node.getDouble("order")).thenReturn(1.0);
         when(node.getString("output")).thenReturn("angle");
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());
@@ -37,7 +37,7 @@ class GratingEquationConverterTest {
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/grating_equation-1.0.0");
         when(node.getDouble("groove_density")).thenReturn(100.0);
-        when(node.getInt("order")).thenReturn(1);
+        when(node.getDouble("order")).thenReturn(1.0);
         when(node.getString("output")).thenReturn("wavelength");
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());
@@ -56,7 +56,7 @@ class GratingEquationConverterTest {
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/grating_equation-1.0.0");
         when(node.getDouble("groove_density")).thenReturn(100.0);
-        when(node.getInt("order")).thenReturn(1);
+        when(node.getDouble("order")).thenReturn(1.0);
         when(node.getString("output")).thenReturn("angle");
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());
@@ -77,7 +77,7 @@ class GratingEquationConverterTest {
         final AsdfNode node = mock(AsdfNode.class);
         when(node.getTag()).thenReturn("tag:stsci.edu:gwcs/grating_equation-1.0.0");
         when(node.getDouble("groove_density")).thenReturn(100.0);
-        when(node.getInt("order")).thenReturn(1);
+        when(node.getDouble("order")).thenReturn(1.0);
         when(node.getString("output")).thenReturn("invalid");
         when(node.getOptional("name")).thenReturn(Optional.empty());
         when(node.getOptional("inputs")).thenReturn(Optional.empty());

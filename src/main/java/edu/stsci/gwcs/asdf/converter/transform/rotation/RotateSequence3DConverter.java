@@ -1,17 +1,18 @@
 package edu.stsci.gwcs.asdf.converter.transform.rotation;
 
 import edu.stsci.gwcs.asdf.GwcsAsdfSupport;
+import edu.stsci.gwcs.asdf.converter.AsdfNodeUtils;
 import edu.stsci.gwcs.asdf.converter.ConverterBase;
 import edu.stsci.gwcs.transform.Transform;
 import edu.stsci.gwcs.transform.rotation.RotateSequence3D;
 import org.asdfformat.asdf.node.AsdfNode;
 
-import java.util.List;
 import java.util.Set;
 
 public class RotateSequence3DConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
-            "tag:stsci.edu:asdf/transform/rotate_sequence_3d-1.1.0"
+            "tag:stsci.edu:asdf/transform/rotate_sequence_3d-1.1.0",
+            "tag:stsci.edu:asdf/transform/rotate_sequence_3d-1.2.0"
     );
 
     public RotateSequence3DConverter(final GwcsAsdfSupport support) {
@@ -25,11 +26,7 @@ public class RotateSequence3DConverter extends ConverterBase {
             throw new IllegalArgumentException("Unsupported rotation_type: " + rotationType);
         }
 
-        final List<Double> anglesList = node.getList("angles", Double.class);
-        final double[] angles = new double[anglesList.size()];
-        for (int i = 0; i < angles.length; i++) {
-            angles[i] = anglesList.get(i);
-        }
+        final double[] angles = AsdfNodeUtils.readDoubleArray(node, "angles");
         final String axesOrder = node.getString("axes_order");
         return new RotateSequence3D(angles, axesOrder);
     }

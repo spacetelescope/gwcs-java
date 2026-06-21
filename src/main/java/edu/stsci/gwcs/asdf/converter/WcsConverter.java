@@ -10,6 +10,7 @@ import java.util.Set;
 public class WcsConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:gwcs/wcs-1.2.0",
+            "tag:stsci.edu:gwcs/wcs-1.3.0",
             "tag:stsci.edu:gwcs/wcs-1.4.0"
     );
 

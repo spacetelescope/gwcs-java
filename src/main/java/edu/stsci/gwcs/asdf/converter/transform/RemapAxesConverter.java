@@ -12,7 +12,8 @@ import java.util.Set;
 public class RemapAxesConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:asdf/transform/remap_axes-1.3.0",
-            "tag:stsci.edu:asdf/transform/remap_axes-1.4.0"
+            "tag:stsci.edu:asdf/transform/remap_axes-1.4.0",
+            "tag:stsci.edu:asdf/transform/remap_axes-1.5.0"
     );
 
     public RemapAxesConverter(final GwcsAsdfSupport support) {

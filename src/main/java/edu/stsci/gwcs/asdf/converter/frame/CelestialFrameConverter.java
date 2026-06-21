@@ -11,6 +11,7 @@ import java.util.Set;
 public class CelestialFrameConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:gwcs/celestial_frame-1.0.0",
+            "tag:stsci.edu:gwcs/celestial_frame-1.1.0",
             "tag:stsci.edu:gwcs/celestial_frame-1.2.0"
     );
 

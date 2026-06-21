@@ -11,7 +11,8 @@ import java.util.Set;
 public class ConstantConverter extends ConverterBase {
     private static final Set<String> TAGS = Set.of(
             "tag:stsci.edu:asdf/transform/constant-1.4.0",
-            "tag:stsci.edu:asdf/transform/constant-1.5.0"
+            "tag:stsci.edu:asdf/transform/constant-1.5.0",
+            "tag:stsci.edu:asdf/transform/constant-1.6.0"
     );
 
     public ConstantConverter(final GwcsAsdfSupport support) {

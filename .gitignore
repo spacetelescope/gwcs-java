@@ -36,5 +36,4 @@ build
 .settings/
 .idea/
 
-# ASDF test fixtures left at repo root
-*.asdf
+docs

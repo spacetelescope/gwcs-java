@@ -48,7 +48,7 @@ jobs:
       - name: Publish
         run: mvn --batch-mode deploy
         env:
-          ASDF_JAVA_TESTS_PYTHON_PATH: ${{ steps.locate-python.outputs.python-path }}
+          GWCS_JAVA_TESTS_PYTHON_PATH: ${{ steps.locate-python.outputs.python-path }}
           SERVER_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           SERVER_PASSWORD: ${{ secrets.CENTRAL_TOKEN }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

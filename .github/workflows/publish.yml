@@ -46,7 +46,7 @@ jobs:
           REF_NAME: ${{ github.ref_name }}
 
       - name: Publish
-        run: mvn --batch-mode deploy -Pdeploy,release
+        run: mvn --batch-mode deploy -Prelease
         env:
           ASDF_JAVA_TESTS_PYTHON_PATH: ${{ steps.locate-python.outputs.python-path }}
           SERVER_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
